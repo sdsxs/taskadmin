@@ -1,0 +1,163 @@
+<include file="public@header" />
+<link rel="stylesheet" href="__STATIC__/js/layui-v2.0.2/css/modules/laydate/default/laydate.css" type="text/css" >
+</head>
+<link rel="stylesheet" href="/static/js/layui-v2.0.2/css/layui.css" type="text/css" >
+<body>
+
+
+    <!--<form class="well form-inline margin-top-20" method="get" action="/admin/pool/index.html">
+        姓名:
+        <input type="text" class="form-control" name="p_name" style="width: 120px;" value="" placeholder="请输入姓名">
+        电话:
+        <input type="text" class="form-control" name="p_telphone" style="width: 120px;" value="" placeholder="请输入电话">
+        <input type="submit" class="btn btn-primary" value="搜索">
+        <a class="btn btn-danger" href="/admin/pool/index.html">清空</a>
+    </form>-->
+    <div class="wrap js-check-wrap">
+        <ul class="nav nav-tabs">
+            <li ><a href="{:url('task/mytask')}">我的任务</a></li>
+            <li class="active"><a href="{:url('task/statistics')}">我的任务统计图</a></li>
+        </ul>
+        <form class="well form-inline margin-top-20" method="get" action="{:url('Task/statistics')}">
+            选择时间段:
+            <input type="text" class="form-control js-bootstrap-date"  name="task_start_time" style="width: 120px;" value="{:input('request.task_start_time/s','')}">
+            --
+            <input type="text" class="form-control js-bootstrap-date"  name="task_end_time" style="width: 120px;" value="{:input('request.task_end_time/s','')}" >
+            <input type="submit" class="btn btn-primary" value="搜索" />
+            <a class="btn btn-danger" href="{:url('Task/taskList')}">清空</a>
+        </form>
+    <div id="container" style="width:100%;min-height: 300px;">
+
+    </div>
+        <div id="count" style="width:100%;line-height: 30px;">
+            <table class="table table-hover table-bordered">
+                <thead>
+                <tr>
+                    <th width="100"> 状态</th>
+                    <th>分值</th>
+                    <th>任务数量</th>
+
+                </tr>
+                </thead>
+                <foreach name="list" item="vo">
+                    <tr>
+                        <th width="">
+                            <switch name="vo.task_status">
+                                <case value="0">
+                                    <a  class="btn btn-xs " href="{:url('Task/mytask',['task_status'=>$vo.task_status])}"> <span class="label label-danger">待办</span></a>
+                                </case>
+                                <case value="1">
+                                    <a  class="btn btn-xs " href="{:url('Task/mytask',['task_status'=>$vo.task_status])}">  <span class="label label-success">进行</span></a>
+                                </case>
+                                <case value="2">
+                                    <a  class="btn btn-xs " href="{:url('Task/mytask',['task_status'=>$vo.task_status])}"> <span class="label label-info">审核</span></a>
+                                </case>
+                                <case value="3">
+                                    <a  class="btn btn-xs " href="{:url('Task/mytask',['task_status'=>$vo.task_status])}"> <span class="label label-primary">完成</span></a>
+                                </case>
+                                <case value="4">
+                                    <a  class="btn btn-xs " href="{:url('Task/mytask',['task_status'=>$vo.task_status])}"> <span class="label label-primary">逾期</span></a>
+                                </case>
+                                <case value="5">
+                                    <a  class="btn btn-xs " href="{:url('Task/mytask',['task_status'=>$vo.task_status])}"> <span class="label label-primary">驳回</span></a>
+                                </case>
+                                <case value="10">
+                                    <a  class="btn btn-xs " href="{:url('Task/mytask',['task_status'=>$vo.task_status])}"> <span class="label label-warning">关闭</span>
+                                </case>
+                            </switch>
+                        </th>  <th width="">{$vo.score}</th>  &nbsp;&nbsp;&nbsp;  <th width="">{$vo.count}</th>
+                    </tr>
+                </foreach>
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+<script type="text/javascript" src="__STATIC__/js/echarts.min.js"></script>
+<script src="__STATIC__/js/layui-v2.0.2/layui.js"></script>
+<script src="__STATIC__/js/layui-v2.0.2/lay/modules/laydate.js"></script>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#time_start',
+            type:'date', // 可选择：年、月、日、时、分、秒
+            format: 'yyyy-MM-dd', //指定时间格式
+            value: new Date(), // 指定值
+            //指定元素
+        });
+        laydate.render({
+            elem: '#time_end', //指定元素
+            type:'date', // 可选择：年、月、日、时、分、秒
+            format: 'yyyy-MM-dd', //指定时间格式
+            value: new Date(), // 指定值
+        });
+    });
+</script>
+<script type="text/javascript">
+    var dom = document.getElementById("container");
+    var myChart = echarts.init(dom);
+    var app = {};
+
+    var option;
+
+
+
+    option = {
+        title: {
+            text: '我的任务分值统计占比',
+            subtext: '部门统计',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item'
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left'
+        },
+        series: [
+            {
+                name: '分类',
+                type: 'pie',
+                radius: '60%',
+                data: [ //、、、
+                    <foreach name="list" item="vo">
+                    { value: {$vo.score}, name: '{$vo.name}状态中分值' },
+                     </foreach>
+
+                ],
+                label : {
+                    normal : {
+                        formatter: '{b}:{c}({d}%)',
+                        textStyle : {
+                            fontWeight : 'normal',
+                            fontSize : 15
+                        }
+                    }
+                },
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+
+
+
+    if (option && typeof option === 'object') {
+        myChart.setOption(option);
+    }
+
+</script>
+</body>
+</html>

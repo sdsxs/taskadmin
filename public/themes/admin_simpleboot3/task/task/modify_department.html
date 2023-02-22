@@ -1,0 +1,293 @@
+<include file="public@header" />
+<style>
+    .new-form-control{
+        width: 49%;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #333333;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+    <form method="post" id="form" class="form-horizontal js-ajax-form margin-top-20" action="">
+
+        <div class="form-group">
+            <input type="hidden" name="userid" value="{$Request.get.id}">
+            <label for="input-user_login" class="col-sm-2 control-label">
+                <span class="form-required"></span>架构调整：</label>
+            <div class="col-md-6 col-sm-10">
+                <table style="text-align: left">
+                    <tr>
+                        <td>{$user.one|default=""} </td><td width="50px" >=></td><td width="350px">
+                        <select class="new-form-control" id="one" name="post[one]">
+                        <option >选择一级架构</option>
+                        <foreach name="getDepartment" item="vo">
+                            <option value="{$vo.one}">{$vo.one}-{$vo.one}</option>
+                        </foreach>
+                        </select>
+                    </td>
+                    </tr>
+                    <tr>
+                        <td>{$user.two}</td><td>=></td>
+                        <td><select class="new-form-control" id="two" name="post[two]"></select></td>
+                    </tr>
+                    <tr>
+                        <td>{$user.three}</td><td>=></td>
+                        <td><select class="new-form-control" id="three" name="post[three]">
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td>{$user.four}</td><td>=></td>
+                        <td><select class="new-form-control" id="four" name="post[four]">
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td>{$user.five}</td><td>=></td>
+                        <td><select class="new-form-control" id="five" name="post[five]">
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td>{$user.six}</td><td>=></td>
+                        <td><select class="new-form-control" id="six" name="post[six]">
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td>{$user.seven}</td><td>=></td>
+                        <td><select class="new-form-control" id="seven" name="post[seven]">
+                        </select></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary js-ajax-submit">修改</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    $("#form").submit(function(e){
+        var str = '';
+        $("#user_add").find('a').each(function (index,e) {
+            str += $(this).attr('data')+','
+
+        })
+        $('#setuser').val(str)
+    });
+    $('#one').change(function() {
+        var department = $(this).val()
+        if(department == ""){
+            return
+        }
+        $.ajax({
+            url:"{:Url('task/getNextDeparment')}",
+            data:{
+                one:department,
+                class:'two'
+            },
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                var html ='<option>选择二级架构</option>'
+                var project= ''
+                var  division = xhr.data
+                for (x in division) {
+                    html += '<option   value="'+division[x].two+'">'+division[x].two+'</option>'
+                }
+                $("#two").html(html)
+                $("#three").html("")
+                $("#four").html("")
+                $("#five").html("")
+                $("#six").html("")
+                $("#seven").html("")
+                /* for (x in rule) {
+                     project += '<option   value="'+rule[x].project+'">'+rule[x].project+'</option>'
+                 }
+                 $("#rule").html(project);*/
+            }
+        });
+    })
+    $('#two').change(function() {
+        var one = $('#one').val()
+        var two = $('#two').val()
+        if(one == "" || two ==""){
+            return
+        }
+        $.ajax({
+            url:"{:Url('task/getNextDeparment')}",
+            data:{
+                one:one,
+                two:two,
+                class:'three'
+            },
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                var html ='<option>选择三级架构</option>'
+                var project= ''
+                var  division = xhr.data
+                for (x in division) {
+                    html += '<option   value="'+division[x].three+'">'+division[x].three+'</option>'
+                }
+                $("#three").html(html)
+                $("#four").html("")
+                $("#five").html("")
+                $("#six").html("")
+                $("#seven").html("")
+                /* for (x in rule) {
+                     project += '<option   value="'+rule[x].project+'">'+rule[x].project+'</option>'
+                 }
+                 $("#rule").html(project);*/
+            }
+        });
+    })
+    $('#three').change(function() {
+        var one = $('#one').val()
+        var two = $('#two').val()
+        var three = $('#three').val()
+        if(one == "" || two== "" || three==""){
+            return
+        }
+        $.ajax({
+            url:"{:Url('task/getNextDeparment')}",
+            data:{
+                one:one,
+                two:two,
+                three:three,
+                class:'four'
+            },
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                var html ='<option>选择四级架构</option>'
+                var project= ''
+                var  division = xhr.data
+                for (x in division) {
+                    html += '<option   value="'+division[x].four+'">'+division[x].four+'</option>'
+                }
+                $("#four").html(html)
+                $("#five").html("")
+                $("#six").html("")
+                $("#seven").html("")
+            }
+        });
+    })
+    $('#four').change(function() {
+        var one = $('#one').val()
+        var two = $('#two').val()
+        var three = $('#three').val()
+        var four    =   $('#four').val()
+
+        if(one == "" || two=="" || three=="" || four==""){
+            return
+        }
+        $.ajax({
+            url:"{:Url('task/getNextDeparment')}",
+            data:{
+                one:one,
+                two:two,
+                three:three,
+                four:four,
+                class:'five'
+            },
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                var html ='<option value="">选择五级架构</option>'
+                var project= ''
+                var  division = xhr.data
+                for (x in division) {
+                    html += '<option   value="'+division[x].five+'">'+division[x].five+'</option>'
+                }
+                $("#five").html(html)
+                $("#six").html("")
+                $("#seven").html("")
+            }
+        });
+    })
+    $('#five').change(function() {
+        var one = $('#one').val()
+        var two = $('#two').val()
+        var three = $('#three').val()
+        var four    =   $('#four').val()
+        var five    =   $('#five').val()
+        if(one == "" || two=="" || three=="" || four=="" || five==""){
+            return
+        }
+        $.ajax({
+            url:"{:Url('task/getNextDeparment')}",
+            data:{
+                one:one,
+                two:two,
+                three:three,
+                four:four,
+                five:five,
+                class:'six'
+            },
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                var html ='<option value="">选择六级架构</option>'
+                var project= ''
+                var  division = xhr.data
+                for (x in division) {
+                    html += '<option   value="'+division[x].six+'">'+division[x].six+'</option>'
+                }
+                $("#six").html(html)
+                $("#seven").html("")
+            }
+        });
+    })
+    $('#six').change(function() {
+        var one = $('#one').val()
+        var two = $('#two').val()
+        var three = $('#three').val()
+        var four    =   $('#four').val()
+        var five    =   $('#five').val()
+        var six    =   $('#six').val()
+        if(one == "" || two=="" || three=="" || four=="" || five=="" || six==''){
+            return
+        }
+        $.ajax({
+            url:"{:Url('task/getNextDeparment')}",
+            data:{
+                one:one,
+                two:two,
+                three:three,
+                four:four,
+                five:five,
+                six:six,
+                class:'seven'
+            },
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                var html ='<option value="">选择七级架构</option>'
+                var project= ''
+                var  division = xhr.data
+                for (x in division) {
+                    html += '<option   value="'+division[x].seven+'">'+division[x].seven+'</option>'
+                }
+                $("#seven").html(html)
+                /* for (x in rule) {
+                     project += '<option   value="'+rule[x].project+'">'+rule[x].project+'</option>'
+                 }
+                 $("#rule").html(project);*/
+            }
+        });
+    })
+
+</script>
+</body>
+</html>

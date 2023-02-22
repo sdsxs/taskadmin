@@ -1,0 +1,269 @@
+<include file="public@header" />
+<style>
+    .new-form-control{
+        width: 50%;
+        height: 34px;
+
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #333333;
+        background-color: #fff;
+        background-image: none;
+        /*border: 1px solid #ddd;*/
+        border-radius: 4px;
+    }
+    .format-control{
+        width: 25%;
+        height: 34px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #333333;
+        background-color: #fff;
+        background-image: none;
+        /*border: 1px solid #ddd;*/
+        border-radius: 4px;
+        float:left;
+    }
+    *{margin: 0;padding: 0;list-style:none;border:none;}
+
+    body {
+        font-family: "microsoft yahei" !important;
+        background-color: #FDFFE0;
+    }
+    ul,li{
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    li{
+        line-height:30px;
+        font-size:16px;
+        padding:5px 10px;
+    }
+    li.current{
+        background:#CCCCCC;
+        color:#0000FF;
+        cursor: pointer;
+    }
+    li:hover{
+        background:#CCCCCC;
+        color:#0000FF;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+
+
+
+
+<ul class="breadcrumb">
+    <li><a href="{:url('admin/index/myTransfer')}">我的转介绍</a></li>
+    <li style="border-bottom: 1px solid #0a6999"><a href="{:url('admin/index/resource')}">新增</a></li>
+    <li><a href="{:url('admin/index/mySourceList')}">我的资源</a></li>
+</ul>
+<div class="wrap">
+    <form method="post" id="form" class="form-horizontal js-ajax-form margin-top-20" action="">
+
+        <div id="search-form"></div>
+        <div class="form-group">
+            <label for="input-user_pass" class="col-sm-2 control-label">
+                <span class="form-required">*</span>转介绍人业态
+            </label>
+            <div class="col-md-6 col-sm-10">
+                <input type="hidden" class="form-control"  name="transfer_code" value="{$Think.session.name}">
+                <!--<select type="text" class="form-control "  name="transfer_format">
+                    <foreach name="format" item="vo">
+                        <option value="{$vo.format}">{$vo.format}</option>
+                    </foreach>
+                </select>-->
+                <select type="text" class="format-control format" data="format"  >
+                    <option value="">选择业态</option>
+                    <foreach name="format" item="vo">
+                        <option value="{$vo.format}">{$vo.format}</option>
+                    </foreach>
+                </select>
+                <select type="text" class="format-control format primary_category" data="primary_category"  >
+                    <option value="">一级类目</option>
+
+                </select>
+                <select type="text" class="format-control format secondary_category" data="secondary_category" >
+                    <option value="">二级类目</option>
+
+                </select>
+                <select type="text" class="format-control format tertiary_category" data="tertiary_category" name="transfer_format">
+                    <option value="">三级类目</option>
+
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="input-user_login" class="col-sm-2 control-label">
+                <span class="form-required">*</span>接收人</label>
+            <div class="col-md-6 col-sm-10">
+                <input id="usernickname" class="new-form-control" name="" placeholder="输入姓名" style="float:left;border: 1px solid #ddd">
+                <select class="new-form-control" ID="userlist" name="accept_code"  style="border: 1px solid #ddd">
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-user_pass" class="col-sm-2 control-label">
+                <span class="form-required">*</span>接收人业态
+            </label>
+            <div class="col-md-6 col-sm-10">
+                <select type="text" class="format-control format" data="format"  >
+                    <option value="">选择业态</option>
+                    <foreach name="format" item="vo">
+                        <option value="{$vo.format}">{$vo.format}</option>
+                    </foreach>
+                </select>
+                <select type="text" class="format-control format primary_category" data="primary_category"  >
+                    <option value="">一级类目</option>
+
+                </select>
+                <select type="text" class="format-control format secondary_category" data="secondary_category" >
+                    <option value="">二级类目</option>
+
+                </select>
+                <select type="text" class="format-control format tertiary_category" data="tertiary_category" name="accept_format">
+                    <option value="">三级类目</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="input-user_pass" class="col-sm-2 control-label">
+                <span class="form-required">*</span>商机编号
+            </label>
+            <div class="col-md-6 col-sm-10">
+                <input type="text" class="form-control "  name="opportunity_number">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="input-user_pass" class="col-sm-2 control-label">
+                <span class="form-required">*</span>客户名称
+            </label>
+            <div class="col-md-6 col-sm-10">
+                <input type="text" class="form-control "  name="customer_name">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-user_pass" class="col-sm-2 control-label">
+                <span class="form-required">*</span>客户需求
+            </label>
+            <div class="col-md-6 col-sm-10">
+                <input type="text" class="form-control "  name="customer_demand">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-user_pass" class="col-sm-2 control-label">
+                <span class="form-required">*</span>状态
+            </label>
+            <div class="col-md-6 col-sm-10">
+                <select type="text" class="form-control "  name="status">
+                    <option value="待跟进">待跟进</option>
+                    <option value="跟进中">跟进中</option>
+                    <option value="已签单">已签单</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-user_pass" class="col-sm-2 control-label">
+               金额
+            </label>
+            <div class="col-md-6 col-sm-10">
+               <input type="number" class="form-control" name="amount">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-user_pass" class="col-sm-2 control-label">
+
+            </label>
+            <div class="col-md-6 col-sm-10">
+                <button type="submit" class="form-control btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+
+<script>
+
+    $('#usernickname').bind('input propertychange',function(){
+        var name = $(this).val()
+        if(name == ""){
+            return
+        }
+        $.ajax({
+            url:"{:Url('task/task/getUserByName')}",
+            data:{
+                name:name
+            },
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                var html =''
+                var project= ''
+                var  division = xhr.data
+                for (x in division) {
+                    html += '<option   value="'+division[x].user_login+'">'+division[x].user_login+'--'+division[x].user_nickname+'</option>'
+                }
+                $("#userlist").html(html)
+                /* for (x in rule) {
+                     project += '<option   value="'+rule[x].project+'">'+rule[x].project+'</option>'
+                 }
+                 $("#rule").html(project);*/
+            }
+        });
+    })
+    $('.format').change(function() {
+        var nowCategory = $(this).attr('data')
+        var words   = $(this).val()
+        var obj =   $(this)
+        if(nowCategory == "" || nowCategory=='tertiary_category'){
+            return
+        }
+        $.ajax({
+            url:"{:Url('admin/index/getNextCategory')}",
+            data:{
+                nowCategory:nowCategory,
+                words:words
+            },
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                var html ='<option value="">下级类目</option>'
+                var project= ''
+                var  division = xhr.data
+                if(nowCategory=='format'){
+                    for (x in division) {
+                        html += '<option   value="'+division[x].primary_category+'">'+division[x].primary_category+'</option>'
+                    }
+                    obj.parent().find('.primary_category').html(html)
+                }
+                if(nowCategory=='primary_category'){
+                    for (x in division) {
+                        html += '<option   value="'+division[x].secondary_category+'">'+division[x].secondary_category+'</option>'
+                    }
+                    obj.parent().find('.secondary_category').html(html)
+                }
+                if(nowCategory=='secondary_category'){
+                    for (x in division) {
+                        html += '<option   value="'+division[x].id+'">'+division[x].tertiary_category+'</option>'
+                    }
+                    obj.parent().find('.tertiary_category').html(html)
+                }
+
+                /* for (x in rule) {
+                     project += '<option   value="'+rule[x].project+'">'+rule[x].project+'</option>'
+                 }
+                 $("#rule").html(project);*/
+            }
+        });
+    })
+
+</script>
+</body>
+</html>

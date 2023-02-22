@@ -1,0 +1,472 @@
+<include file="public@header" />
+<style>
+    .new-form-control{
+        width: 49%;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #333333;
+        background-color: #fff;
+        background-image: none;
+        /*  border: 1px solid #ddd;*/
+        border-radius: 4px;
+    }
+    .list li{
+        list-style: none;
+    }
+</style>
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('task/teamtask',['parentid'=>$Request.param.parentid])}">添加团队任务</a></li>
+    </ul>
+    <form method="post" id="form" class="form-horizontal js-ajax-form margin-top-20" action="{:url('task/addpost')}">
+        <notempty name="$Request.param.parentid">
+            <include file="task@taskdetail" />
+        </notempty>
+        <div class="form-group">
+            <label for="input-user_login" class="col-sm-2 control-label">
+                <span class="form-required">*</span>任务名</label>
+            <div class="col-md-6 col-sm-10">
+                <input type="text" class="form-control" id="input-user_login" name="task_title">
+                <input type="hidden" class="form-control" id="input-" name="parentid" value="{$Request.param.parentid|default=0}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-user_login" class="col-sm-2 control-label">
+                <span class="form-required">*</span>任务分类</label>
+            <div class="col-md-6 col-sm-10">
+                <input type="hidden" class="" value="4" name="task_multiplayer" >
+                <select name="task_type">
+                    <option value="其他">其他</option>
+                    <option value="浏览类任务">浏览类任务</option>
+                    <option value="分享类任务">分享类任务</option>
+                    <option value="考试类任务">考试类任务</option>
+                    <option value="视频类任务">视频类任务</option>
+                    <option value="调研类任务">调研类任务</option>
+                    <option value="业务动作类任务">业务动作类任务</option>
+                    <option value="交叉洗客">交叉洗客</option>
+                    <option value="十品十源_客源">十品十源_客源</option>
+                </select>&nbsp;
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-user_login" class="col-sm-2 control-label">
+                <span class="form-required">*</span>选择部门（可多选）</label>
+            <div class="col-md-6 col-sm-10 list">
+                <foreach name="getDepartment" item="vo">
+                    <ul style="margin:0px; padding:0px;">
+                        <li>
+                            <i class="fa fa-plus-square-o one" data="{$vo.id}"> {$vo.name}</i>
+                        </li>
+                    </ul>
+                </foreach>
+            </div>
+        </div>
+
+        <div class="form-group" id="" style="display: none">
+            <label for="input-user_login" class="col-sm-2 control-label">
+                标签</label>
+            <div class="col-md-6 col-sm-10">
+                <!-- <input type="text" class="form-control" id="" name="label">-->
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-user_pass" class="col-sm-2 control-label">
+                所属项目(非必选)
+            </label>
+            <div class="col-md-6 col-sm-10">
+                <select class="form-control valid" name="task_project_id"  aria-invalid="false">
+                    <option value="0">无</option>
+                    <foreach name="project" item="vol">
+                        <option value="{$vol.project_id}">{$vol.project_title}</option>
+                    </foreach>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-user_pass" class="col-sm-2 control-label">
+                <span class="form-required">*</span>任务文本内容
+            </label>
+            <div class="col-md-6 col-sm-10">
+                <textarea class="form-control valid" id="input-site_seo_description" name="task_content" aria-invalid="false"></textarea>
+            </div>
+
+        </div>
+        <div class="form-group">
+            <label for="input-user_pass" class="col-sm-2 control-label">
+                <span class="form-required"></span>任务示例图
+            </label>
+            <div class="new-form-control col-md-6 col-sm-10">
+                <input id="photo-1" type="hidden" name="photo_url" >
+                <input id="photo-1-name" type="text" title="图片名称" readonly>
+                <img id="photo-1-preview" style="display: none;">
+                <a href="javascript:uploadOneImage('图片上传','#photo-1');">上传</a>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-user_pass" class="col-sm-2 control-label">
+                <span class="form-required">*</span>优先级
+            </label>
+            <div class="col-md-6 col-sm-10">
+                <select class="form-control valid" name="task_priority"  >
+                    <option value="1">正常</option>
+                    <option value="2">次要</option>
+                    <option value="3" selected="">主要</option>
+                    <option value="4" selected="">紧急</option>
+                    <option value="5" selected="">严重</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-user_pass" class="col-sm-2 control-label">
+                <span class="form-required">*</span>任务计划开始时间
+            </label>
+            <div class="col-md-6 col-sm-10">
+                <input type="text" class="form-control js-bootstrap-datetime"  name="task_start_time"
+                       type="text"
+                       id="input-birthday"
+                       placeholder="2013-01-04 12:00:00" >
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-user_pass" class="col-sm-2 control-label">
+                <span class="form-required">*</span>任务计划结束时间
+            </label>
+            <div class="col-md-6 col-sm-10">
+                <input type="text" class="form-control js-bootstrap-datetime"  name="task_end_time"  placeholder="2013-01-04 12:00:00">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-user_pass" class="col-sm-2 control-label">
+                <span class="form-required">*</span>任务价值分
+            </label>
+            <div class="col-md-6 col-sm-10">
+                <input type="number" class="form-control "  name="task_mark"  placeholder="" >
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-user_pass" class="col-sm-2 control-label">
+                目标值
+            </label>
+            <div class="col-md-6 col-sm-10">
+                <input type="number" class="form-control "  name="target"  placeholder="" >
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    $(function () {
+        var obj =new Object();
+         obj.name = "getchild";
+        function getname(){
+            return obj.name
+        }
+        window.s = obj;
+    })
+    $("#form").submit(function(e){
+        var str = '';
+        $("#user_add").find('a').each(function (index,e) {
+            str += $(this).attr('data')+','
+
+        })
+        $('#setuser').val(str)
+    });
+    $('.one').click(function() {
+        alert(s.getname);return
+        var department = $(this).attr('data')
+        var obj =   $(this)
+        if(department == ""){
+            return
+        }
+        $.ajax({
+            url:"{:Url('task/getChildWxDepartment')}",
+            data:{
+                id:department
+            },
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                var html ='<ul>'
+                var  division = xhr.data.department
+                for (x in division) {
+                    html += '<li   >'+'<i class="fa fa-plus-square-o two" data="'+division[x].id+'">'+division[x].name+'</i>'+'</li>'
+                }
+                html +='</ul>'
+                obj.append(html)
+                obj.unbind("click");
+                obj.find('.two').bind('click',two)
+                /* for (x in rule) {
+                     project += '<option   value="'+rule[x].project+'">'+rule[x].project+'</option>'
+                 }
+                 $("#rule").html(project);*/
+            }
+        });
+    })
+    function two(){
+
+        var data    = $(this).attr('data')
+        var obj=$(this)
+        $.ajax({
+            url:"{:Url('task/getChildWxDepartment')}",
+            data:{
+                id:data
+            },
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                var html ='<ul>'
+                var  division = xhr.data.department
+
+                for (x in division) {
+                    //html += '<li   >'+'<i class="fa fa-plus-square-o two" data="'+division[x].id+'">'+division[x].name+'</i>'+'</li>'
+                    html += '<li   >'+'<i class="fa fa-plus-square-o two" data="'+division[x].id+'">'+'</i>'+' <input type="checkbox" name="departmentstr[][id]" value="'+division[x].id+'">'+division[x].name+'</li>'
+
+                }
+                html +='</ul>'
+                obj.parent().append(html)
+                obj.parent().find('.two').bind('click',two)
+                obj.unbind("click");
+            }
+        });
+    }
+    function three(){
+        var one =  $(this).parent().parent().parent().parent().parent().parent().attr('data')
+        var two = $(this).parent().parent().parent().attr('data')
+        var obj=$(this)
+        var three = obj.attr('data')
+        if(one == "" || two== "" || three==""){
+            return
+        }
+        $.ajax({
+            url:"{:Url('task/getNextDeparment')}",
+            data:{
+                one:one,
+                two:two,
+                three:three,
+                class:'four'
+            },
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                var html ='<ul>'
+                var  division = xhr.data
+                for (x in division) {
+                    //html += '<li   value="'+division[x].three+'">'+division[x].three+'</li>'
+                    //html += '<li   >'+'<i class="fa fa-plus-square-o four" data="'+division[x].four+'"> <input type="checkbox" name="departmentstr[]" value="'+one+','+two+','+three+','+division[x].four+'">'+division[x].four+'</i>'+'</li>'
+                    html += '<li   >'+'<i class="fa fa-plus-square-o four" data="'+division[x].four+'"> '+division[x].four+'</i>'+'</li>'
+
+                }
+                html +='</ul>'
+                obj.append(html)
+                obj.unbind("click");
+                obj.find('.four').bind('click',four)
+            }
+        });
+    }
+
+    function four() {
+        var obj =$(this)
+        var one = obj.parent().parent().parent().parent().parent().parent().parent().parent().parent().attr('data')
+        var two = obj.parent().parent().parent().parent().parent().parent().attr('data')
+        var three = obj.parent().parent().parent().attr('data')
+        var four    =   obj.attr('data')
+
+        if(one == "" || two=="" || three=="" || four==""){
+            return
+        }
+        $.ajax({
+            url:"{:Url('task/getNextDeparment')}",
+            data:{
+                one:one,
+                two:two,
+                three:three,
+                four:four,
+                class:'five'
+            },
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                var html ='<ul>'
+                var  division = xhr.data
+                for (x in division) {
+                    //html += '<li   value="'+division[x].three+'">'+division[x].three+'</li>'
+                    //html += '<li   >'+'<i class="fa fa-plus-square-o five" data="'+division[x].five+'"> <input type="checkbox" name="departmentstr[]" value="'+one+','+two+','+three+','+four+','+division[x].five+'">'+division[x].five+'</i>'+'</li>'
+                    html += '<li   >'+'<i class="fa fa-plus-square-o five" data="'+division[x].five+'"> '+division[x].five+'</i>'+'</li>'
+                }
+                html +='</ul>'
+                obj.append(html)
+                obj.unbind("click");
+                obj.find('.five').bind('click',five)
+            }
+        });
+    }
+    function five() {
+        var obj =$(this)
+        var one = obj.parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().attr('data')
+        var two = obj.parent().parent().parent().parent().parent().parent().parent().parent().parent().attr('data')
+        var three = obj.parent().parent().parent().parent().parent().parent().attr('data')
+        var four = obj.parent().parent().parent().attr('data')
+        var five    =   obj.attr('data')
+        if(one == "" || two=="" || three=="" || four=="" || five==""){
+            return
+        }
+        $.ajax({
+            url:"{:Url('task/getNextDeparment')}",
+            data:{
+                one:one,
+                two:two,
+                three:three,
+                four:four,
+                five:five,
+                class:'six'
+            },
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                var html ='<ul>'
+                var  division = xhr.data
+                for (x in division) {
+                    //html += '<li   value="'+division[x].three+'">'+division[x].three+'</li>'
+                    //html += '<li   >'+'<i class="fa fa-plus-square-o six" data="'+division[x].six+'"> <input type="checkbox" name="departmentstr[]" value="'+one+','+two+','+three+','+four+','+five+','+division[x].six+'">'+division[x].six+'</i>'+'</li>'
+                    html += '<li   >'+'<i class="fa fa-plus-square-o six" data="'+division[x].six+'"> '+division[x].six+'</i>'+'</li>'
+                }
+                html +='</ul>'
+                obj.append(html)
+                obj.unbind("click");
+                obj.find('.six').bind('click',six)
+            }
+        });
+    }
+    function six() {
+        var obj =$(this)
+        var one = obj.parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().attr('data')
+        var two = obj.parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().attr('data')
+        var three = obj.parent().parent().parent().parent().parent().parent().parent().parent().parent().attr('data')
+        var four = obj.parent().parent().parent().parent().parent().parent().attr('data')
+        var five = obj.parent().parent().parent().attr('data')
+        var six    =   obj.attr('data')
+        if(one == "" || two=="" || three=="" || four=="" || five=="" || six==''){
+            return
+        }
+        $.ajax({
+            url:"{:Url('task/getNextDeparment')}",
+            data:{
+                one:one,
+                two:two,
+                three:three,
+                four:four,
+                five:five,
+                six:six,
+                class:'seven'
+            },
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                var html ='<ul>'
+                var  division = xhr.data
+                for (x in division) {
+                    //html += '<li   value="'+division[x].three+'">'+division[x].three+'</li>'
+                    //html += '<li   >'+' <input type="checkbox" name="departmentstr[]" value="'+one+','+two+','+three+','+four+','+five+','+six+','+division[x].seven+'">'+division[x].seven+'</i>'+'</li>'
+                    html += '<li   >'+' <input type="checkbox" name="departmentstr[][id]" value="'+division[x].id+'">'+division[x].seven+'</i>'+'</li>'
+                }
+                html +='</ul>'
+                obj.append(html)
+                obj.unbind("click");
+            }
+        });
+    }
+    /*$('#seven').change(function() {
+        var one = $('#one').val()
+        var two = $('#two').val()
+        var three = $('#three').val()
+        var four    =   $('#four').val()
+        var five    =   $('#five').val()
+        var six    =   $('#six').val()
+        var seven   =    $('#seven').val()
+        if(one == "" || two=="" || three=="" || four=="" || five=="" || six=='' || seven == ""){
+            return
+        }
+        $.ajax({
+            url:"{:Url('task/getUserDeparment')}",
+            data:{
+                one:one,
+                two:two,
+                three:three,
+                four:four,
+                five:five,
+                six:six,
+                seven:seven
+            },
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                var html ='<option>选择人员</option>'
+                var project= ''
+                var  division = xhr.data
+                for (x in division) {
+                    html += '<option   value="'+division[x].id+'">'+division[x].user_login+'--'+division[x].user_nickname+'</option>'
+                }
+                $("#userlist").html(html)
+                /!* for (x in rule) {
+                     project += '<option   value="'+rule[x].project+'">'+rule[x].project+'</option>'
+                 }
+                 $("#rule").html(project);*!/
+            }
+        });
+    })
+
+    $('#userlist').change(function () {
+        var  uid =this.value;
+        if(uid == ''){
+            return
+        }
+        //alert(uid)
+        $.ajax({
+            url:"{:Url('task/getUserById')}",
+            data:{
+                uid:uid
+            },
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                $("#user_add").append('<span"><a href="javascript:void(0)"  data="'+xhr.data.id+'" class="fa fa-times normal"></a>'+xhr.data.user_nickname+' </span>')
+                $("#user_add").find('a').bind('click',function () {
+                    $(this).parent().remove();
+                })
+            }
+        });
+    })*/
+    $('input[name="task_multiplayer"]').click(function () {
+        $("#user_add").hide();
+        $("#label_add").hide()
+        $("#userlist").hide()
+        if(this.value == 0){
+            $("#userlist").show();
+            $("#department").show()
+        }
+        if(this.value == 1){
+            $("#department").show()
+            $("#user_add").show();
+            $("#userlist").show()
+        }
+        if(this.value == 2){
+            $("#department").show();
+        }
+        if(this.value == 3){
+            $("#department").hide()
+            $("#label_add").show()
+        }
+    })
+</script>
+</body>
+</html>

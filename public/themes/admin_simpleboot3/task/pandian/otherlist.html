@@ -1,0 +1,126 @@
+<include file="public@header" />
+</head>
+<style>
+    .new-form-control{
+        width: 49%;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #333333;
+        background-color: #fff;
+        background-image: none;
+        /*border: 1px solid #ddd;*/
+        border-radius: 4px;
+    }
+    *{margin: 0;padding: 0;list-style:none;border:none;}
+
+    body {
+        font-family: "microsoft yahei" !important;
+
+    }
+    ul,li{
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    li{
+        line-height:30px;
+        font-size:16px;
+        padding:5px 10px;
+    }
+    li.current{
+        background:#CCCCCC;
+        color:#0000FF;
+        cursor: pointer;
+    }
+    li:hover{
+        background:#CCCCCC;
+        color:#0000FF;
+        cursor: pointer;
+    }
+</style>
+<body>
+<!--<ul class="breadcrumb">
+
+    <li><a href="{:url('task/pandian/adddata')}">新增</a></li>
+    <li style="border-bottom: 1px solid #0a6999"><a href="{:url('task/pandian/list')}">我的商机</a></li>
+</ul>-->
+<div class="" style=" background-image: url(/static/images/bj.png);width:100%;text-align:center;">
+    <div style="text-align:ceter;margin:auto;padding-top:30px;"><img src="/static/images/logo.png"  height="30"></div>
+    <div style="text-align:ceter;margin:auto;padding-top:30px;"><img src="/static/images/wd.png"  width="100%"></div>
+    <div style="text-align:ceter;margin:auto;padding-top:30px;padding-bottom:80px;color:white"><a href="{:url('task/pandian/other')}"><span style="color:white;">添加商机</span></a></div>
+</div>
+<div class="wrap" style="border-image:#ccc ; width:90%;margin:auto;border-left:0px solid #ccc;margin-top:-50px;background-color:white;border-radius:10px;box-shadow:2px 2px 2px #f1f2f2,2px -2px 2px #f1f2f2,-2px 2px 2px #f1f2f2,-2px -2px 2px #f1f2f2;">
+    <form method="post" id="form" class="form-horizontal js-ajax-form margin-top-20" action="">
+
+        <div id="search-form"></div>
+
+
+        <div class="form-group" style="margin-top:30px;">
+            <div class="col-md-6 col-sm-10">
+                <table style="width: 100%">
+                    <tr>
+                        <td style="text-align: center"> <input type="text" class="form-control "  name="code" style="border-radius:30px;border:1px solid #3d65de;width: 100%"></td>
+                        <td style="text-align: center"><input type="submit" value="搜索" style="width: 100%"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </form>
+
+    <foreach name="data" item="vo">
+        <div style="border:0px solid #ccc;border-radius:3px;text-align:center;height:80px;box-shadow:1px 1px 1px #f1f2f2,1px -1px 1px #f1f2f2,-1px 1px 1px #f1f2f2,-1px -1px 1px #f1f2f2;">
+            <div style="width:50%;float:left;text-align:center;border-right:1px solid #ccc;margin-top:15px;">
+                <div style="width:100%">已添加商机编号</div>
+                <div style="width:100%"> {$vo.opportunity_number}</div>
+            </div>
+            <div style="width:49%;float:left;height:60px;text-align:center;margin-top:15px;">
+                <div style="width:100%">添加时间</div>
+                <div style="width:100%">{$vo.adddate|date='Y-m-d'}  &nbsp;&nbsp;<!--<i class="fa fa-remove delete" id="" data-msg="{$vo.id}" aria-hidden="true"></i>--></div>
+            </div>
+        </div><br>
+    </foreach>
+    <!-- <table class="" >
+         <thead>
+         <tr>
+             <th>商机编号</th>
+             <th>添加时间</th>
+
+         </tr>
+         </thead>
+         <tbody>
+         <foreach name="data" item="vo">
+             <tr>
+                 <td>{$vo.opportunity_number}</td>
+                 <td>{$vo.adddate|date='Y-m-d H:i:s'}</td>
+
+             </tr>
+         </foreach>
+         </tbody>
+     </table>-->
+    <div class="pagination">{$data->render()} <li class="page-item"><a class="page-link" href="javascript:void(0)">共{$data->total()}条</a></li></div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+<script>
+    $(".delete").click(function() {
+        var taskid  =   $(this).attr("data-msg");
+        if(confirm("您确定要删除吗？") == false){
+            return false
+        }
+        $.ajax({
+            url:"{:Url('task/pandian/delete')}",
+            data:{
+                id:taskid
+            },
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                location.reload(true)
+            }
+        });
+    })
+</script>
+</html>

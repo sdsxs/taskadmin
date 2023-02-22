@@ -1,0 +1,227 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>项目列表 - </title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+
+    <link rel="stylesheet" href="__STATIC__/Theme/assets/css/amazeui.min.css?v=2.3.3">
+    <link rel="stylesheet" href="__STATIC__/Theme/assets/css/admin.css?v=2.3.3">
+    <link rel="stylesheet" href="__STATIC__/Theme/assets/css/app.css?v=2.3.3">
+    <link rel="stylesheet" href="__STATIC__/Theme/assets/css/ui-dialog.css?v=2.3.3">
+    <link rel="stylesheet" href="__STATIC__/Theme/assets/css/amazeui.datetimepicker.css?v=2.3.3">
+
+    <script>
+        var PESCMS_URL = 'https://www.pescms.com';
+        var PESCMS_PATH = '';
+    </script>
+
+    <!--[if (gte IE 9)|!(IE)]><!-->
+    <script src="__STATIC__/Theme/assets/js/jquery.min.js?v=2.3.3"></script>
+    <!--<![endif]-->
+    <!--[if lte IE 8 ]>
+    <script src="__STATIC__/Theme/assets/js/jquery.min.js?v=2.3.3"></script>
+    <script src="__STATIC__/Theme/assets/js/modernizr.js?v=2.3.3"></script>
+    <script src="__STATIC__/Theme/assets/js/amazeui.ie8polyfill.min.js?v=2.3.3"></script>
+    <![endif]-->
+    <script src="__STATIC__/Theme/assets/js/amazeui.min.js?v=2.3.3"></script>
+    <script src="__STATIC__/Theme/assets/js/dialog-min.js?v=2.3.3"></script>
+    <script src="__STATIC__/Theme/assets/js/dialog-plus-min.js?v=2.3.3"></script>
+    <script src="__STATIC__/Theme/assets/js/amazeui.datetimepicker.min.js?v=2.3.3"></script>
+
+    <!--加载百度编辑器-->
+    <script src="__STATIC__/Theme/assets/ueditor/ueditor.config.js?v=2.3.3"></script>
+    <script src="__STATIC__/Theme/assets/ueditor/ueditor.all.js?v=2.3.3"></script>
+    <script src="__STATIC__/Theme/assets/ueditor/lang/zh-cn/zh-cn.js?v=2.3.3"></script>
+    <!--加载百度编辑器-->
+
+    <!--百度上传控件-->
+    <link rel="stylesheet" href="__STATIC__/Theme/assets/css/webuploader.css"/>
+    <script src="__STATIC__/Theme/assets/js/webuploader.js"></script>
+    <script src="__STATIC__/Theme/assets/js/AMUIwebuploader.js"></script>
+    <script>
+        $(function(){
+            $.webuploaderConfig({
+                server:'/?g=Team&m=Upload&a=ueditor&method=POST&action=uploadimage'
+            });
+        })
+    </script>
+    <!--百度上传控件-->
+
+    <!--拾色器-->
+    <script src="__STATIC__/Theme/assets/js/spectrum.js?v=2.3.3"></script>
+    <link rel="stylesheet" href="__STATIC__/Theme/assets/css/spectrum.css?v=2.3.3"/>
+    <!--拾色器-->
+
+    <!--图片放大器-->
+    <script src="__STATIC__/Theme/assets/js/jquery.fancybox.min.js?v=2.3.3"></script>
+    <link rel="stylesheet" href="__STATIC__/Theme/assets/css/jquery.fancybox.min.css?v=2.3.3"/>
+    <!--图片放大器-->
+
+    <script src="__STATIC__/Theme/assets/js/app.js?v=2.3.3"></script>
+</head>
+<body><div class="am-text-sm am-padding-top" id="container">
+    <!-- content start -->
+    <div class=" am-padding-xs am-padding-top-0">
+        <div class="am-panel am-panel-default">
+            <div class="am-panel-bd">
+                <div class="am-g am-margin-bottom-xs am-g-collapse">
+                    <div class="am-u-sm-12 am-u-md-6 am-padding-top-xs">
+                        <div class="am-btn-toolbar">
+                            <form id="form1" action="" method="post">
+                            <div class="am-btn-group am-btn-group-xs">
+                            <select name="role" id="role">
+                                <option value="">选择默认权限</option>
+                                <foreach name="role" item="vo">
+                                    <option value="{$vo.id}">{$vo.name}</option>
+                                </foreach>
+                            </select>
+                            </div>
+                            <div class="am-btn-group am-btn-group-xs">
+                                <a href="javascript:void(0)" class="am-btn am-btn-success">同步企微成员</a>
+                            </div>
+                            </form>
+                            <div id="speed" class="am-btn-group am-btn-group-xs" style="border: 1px solid #aaaaaa;line-height: 1.6;width: 50px;text-align: center;display: none">
+                                0%
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="am-u-sm-12 am-u-md-3">
+                        <form>
+                            <div class="am-input-group am-input-group-sm">
+                                <input type="text" name="keyword" value="" class="am-form-field">
+                                <span class="am-input-group-btn">
+                        <input class="am-btn am-radius am-btn-default" type="submit" value="搜索">
+                    </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed" />
+
+                <form class="am-form ajax-submit" action="/?g=Team&m=Project&a=listsort" method="POST">
+                    <input type="hidden" name="method" value="PUT"/>
+                    <table class="am-table am-table-bordered am-table-striped am-table-hover am-text-sm">
+                        <tr>
+                            <th class="table-set">ID</th>
+                            <th class="table-title">部门</th>
+                            <th class="table-title">姓名</th>
+                            <th class="table-set">工号</th>
+                            <th class="table-set">状态</th>
+                            <th class="table-set">操作</th>
+                        </tr>
+                        <foreach name="list" item="vo">
+                            <tr>
+                                <td class="am-text-middle">
+                                    {$vo.id}
+                                </td>
+                                <td class="am-text-middle">
+                                    {$vo.department_name}
+                                </td>
+                                <td class="am-text-middle">{$vo.user_nickname}</td>
+                                <td class="am-text-middle">
+                                    {$vo.code}
+                                </td>
+                                <td class="am-text-middle">
+                                    <switch name="vo.user_status">
+                                        <case value="0">
+                                            <span class="label label-danger"><span style="color: red">禁用</span></span>
+                                        </case>
+                                        <case value="1">
+                                            <span class="label label-success"><span style="color: #4db14d">正常</span></span>
+                                        </case>
+                                        <case value="2">
+                                            <span class="label label-info"><span style="color: blue">未验证</span></span>
+                                        </case>
+                                    </switch>
+                                </td>
+                                <td class="am-text-middle">
+                                    <a>删除</a>
+                                </td>
+                            </tr>
+                        </foreach>
+                    </table>
+                    <ul class="am-pagination am-pagination-right am-text-sm">
+                        <li><a>总计<b>{$list->total()}</b>个记录</a></li>{$list->render()}               </ul>
+                    <!-- <div class="am-margin-top">
+                         <button type="submit" class="am-btn am-radius am-btn-primary am-btn-xs">排序</button>
+                     </div>-->
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+    <!-- content end --></div>
+<script>
+    $(function(){
+
+
+        $('.am-btn-success').on('click', function(){
+            $("#speed").show()
+            var role = $("#role").val()
+            $.ajax({
+                url:"{:Url('task/task/exportUser')}",
+                data:{
+                    status:`1`,
+                    role:role
+                },
+                type:'post',
+                dataType:'json',
+                success:function(xhr){
+                    var page=xhr.data.page
+                    var count=xhr.data.count
+                    var role = xhr.data.role
+                    $("#speed").html(xhr.data.speed+"%")
+                    if(xhr.data.speed == 100){
+                        location.reload()
+                    }
+                    f(page,count,role)
+                },
+                error:function () {
+                    alert(xhr.msg)
+
+                }
+            });
+        })
+        function  f(page,count,role) {
+            $.ajax({
+                url:"{:Url('task/task/exportUser')}",
+                data:{
+                    page:page,
+                    count:count,
+                    role:role
+                },
+                type:'post',
+                dataType:'json',
+                success:function(xhr){
+                    var page1=xhr.data.page
+                    var count1=xhr.data.count
+                    $("#speed").html(xhr.data.speed+"%")
+                    if(xhr.data.speed == 100){
+                        location.reload()
+                    }
+                    f(page1,count1,role)
+                },
+                error:function () {
+                    alert(xhr.msg)
+                    location.reload()
+                }
+            });
+        }
+
+    })
+</script>
+
+</body>
+</html>

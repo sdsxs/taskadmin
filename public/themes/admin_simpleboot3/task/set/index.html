@@ -1,0 +1,86 @@
+<include file="public@header" />
+<link rel="stylesheet" href="__STATIC__/js/layui-v2.0.2/css/modules/laydate/default/laydate.css" type="text/css" >
+</head>
+<link rel="stylesheet" href="/static/js/layui-v2.0.2/css/layui.css" type="text/css" >
+<body>
+
+
+
+<div class="wrap js-check-wrap" style="padding: 0px">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('set/index')}">企微设置</a></li>
+        <li><a href="{:url('set/template')}?template_key=verification_code">通讯录设置</a></li>
+    </ul>
+    <form method="post" class="form-horizontal js-ajax-form margin-top-20" action="/task/set/index.html" novalidate="novalidate">
+        <!--<div class="form-group">
+            <label for="input-from_name" class="col-sm-2 control-label">
+                <span class="form-required">*</span>
+                APPID                <a href="http://www.thinkcmf.com/faq.html?url=https://www.kancloud.cn/thinkcmf/faq/493502" title="" data-toggle="tooltip" target="_blank" data-original-title="查看帮助手册"><i class="fa fa-question-circle"></i></a>
+            </label>
+            <div class="col-md-6 col-sm-10">
+                <input type="text" class="form-control" id="input-from_name" name="from_name" value="">
+            </div>
+        </div>-->
+        <div class="form-group">
+            <label for="input-from" class="col-sm-2 control-label">
+                <span class="form-required">*</span>企业ID            </label>
+            <div class="col-md-6 col-sm-10">
+                <input type="text" class="form-control" id="input-from" name="CorpID" value="{$info.CorpID}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-host" class="col-sm-2 control-label">
+                <span class="form-required">*</span>应用Secret            </label>
+            <div class="col-md-6 col-sm-10">
+                <input type="text" class="form-control" id="" name="Secret" value="{$info.Secret}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-host" class="col-sm-2 control-label">
+                <span class="form-required">*</span>应用AgentId            </label>
+            <div class="col-md-6 col-sm-10">
+                <input type="text" class="form-control" id="" name="AgentId" value="{$info.AgentId}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="js-smtpsecure" class="col-sm-2 control-label">
+                <span class="form-required">*</span>企业名称
+            </label>
+            <div class="col-md-6 col-sm-10">
+                <input type="text" class="form-control" id="input-host" name="Enterprisename" value="{$info.Enterprisename}">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn">保存</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript" src="__STATIC__/js/echarts.min.js"></script>
+<script src="__STATIC__/js/layui-v2.0.2/layui.js"></script>
+<script src="__STATIC__/js/layui-v2.0.2/lay/modules/laydate.js"></script>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#time_start',
+            type:'date', // 可选择：年、月、日、时、分、秒
+            format: 'yyyy-MM-dd', //指定时间格式
+            value: new Date(), // 指定值
+            //指定元素
+        });
+        laydate.render({
+            elem: '#time_end', //指定元素
+            type:'date', // 可选择：年、月、日、时、分、秒
+            format: 'yyyy-MM-dd', //指定时间格式
+            value: new Date(), // 指定值
+        });
+    });
+</script>
+</body>
+</html>

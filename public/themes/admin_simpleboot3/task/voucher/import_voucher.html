@@ -1,0 +1,54 @@
+<include file="public@header" />
+<style>
+    .new-form-control{
+        width: 49%;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #333333;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+
+    <br>
+
+    <form  class="form-horizontal  margin-top-20" action="" method="post"   enctype="multipart/form-data">
+
+        <div class="form-group">
+            <label for="firstname" class="col-sm-2 control-label">模板文件</label>
+            <div class="col-sm-10">
+                <a href="http://{$Think.server.SERVER_NAME}/upload/canquan.xlsx">点击模板下载</a>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="firstname" class="col-sm-2 control-label">选择文件</label>
+            <div class="col-sm-10">
+                <input type="hidden" name="type" value="1" class="pic-list list-unstyled form-inline">
+                <input type="file" name="file" id="template" class="pic-list list-unstyled form-inline">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary ">确定</button>
+            </div>
+        </div>
+    </form>
+    <div class="wrap js-check-wrap" style=";min-height: 400px;">
+        {$info}
+    </div>
+</div>
+<script src="__STATIC__/js/layui-v2.0.2/layui.js"></script>
+<script src="__STATIC__/js/layui-v2.0.2/lay/modules/laydate.js"></script>
+<script src="__STATIC__/js/admin.js"></script>
+
+</body>
+</html>

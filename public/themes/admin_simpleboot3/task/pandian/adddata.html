@@ -1,0 +1,188 @@
+<include file="public@header" />
+<style>
+    .new-form-control{
+        width: 50%;
+        height: 34px;
+
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #333333;
+    
+        background-image: none;
+        /*border: 1px solid #ddd;*/
+        border-radius: 4px;
+    }
+    .format-control{
+        width: 25%;
+        height: 34px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #333333;
+      
+        background-image: none;
+        /*border: 1px solid #ddd;*/
+        border-radius: 4px;
+        float:left;
+    }
+    *{margin: 0;padding: 0;list-style:none;border:none;}
+
+    body {
+       
+    }
+    ul,li{
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    li{
+        line-height:30px;
+        font-size:16px;
+        padding:5px 10px;
+    }
+    li.current{
+        background:#CCCCCC;
+        color:#0000FF;
+        cursor: pointer;
+    }
+    li:hover{
+        background:#CCCCCC;
+        color:#0000FF;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+
+
+
+<!--
+<ul class="breadcrumb">
+    <li style="border-bottom: 1px solid #0a6999"><a href="{:url('task/pandian/adddata')}">新增</a></li>
+    <li><a href="{:url('task/pandian/list')}">我的商机</a></li>
+</ul>-->
+<div class="" style=" background-image: url(/static/images/bj.png);width:100%;text-align:center;">
+    <div style="text-align:ceter;margin:auto;padding-top:30px;"><img src="/static/images/logo.png"  height="30"></div>
+     <div style="text-align:ceter;margin:auto;padding-top:30px;"><img src="/static/images/yx.png"  width="100%"></div>
+      <div style="text-align:ceter;margin:auto;padding-top:30px;padding-bottom:80px;color:white">{$user['user_nickname']} &nbsp;&nbsp;|&nbsp;&nbsp;{$user['code']}&nbsp;&nbsp;|&nbsp;&nbsp;<a href="{:url('task/pandian/list')}"><span style="color:white;">我的商机</span></a></div>
+</div>
+<div class="wrap" style="border-image:#f1f2f2 ; width:80%;margin:auto;border-left:1px solid #f1f2f2;margin-top:-50px;background-color:white;border-radius:10px;box-shadow:2px 2px 2px #f1f2f2,2px -2px 2px #f1f2f2,-2px 2px 2px #f1f2f2,-2px -2px 2px #f1f2f2;">
+    <form method="post" id="form" class="form-horizontal js-ajax-form margin-top-20" action="">
+
+        <div id="search-form"></div>
+        
+             
+        <div class="form-group" style="margin-top:30px;">
+            <label for="input-user_pass" class="col-sm-2 control-label">
+                <span class="form-required">*</span>商机编号
+            </label>
+            <div class="col-md-6 col-sm-10">
+                <input type="text" class="form-control "  name="opportunity_number" style="border-radius:30px;border:1px solid #3d65de">
+            </div>
+        </div>
+        <div class="form-group" style="margin-top:30px;">
+            <label for="input-user_pass" class="col-sm-2 control-label">
+                <span class="form-required">*</span>预估签单金额
+            </label>
+            <div class="col-md-6 col-sm-10">
+                <input type="text" class="form-control "  name="amount" style="border-radius:30px;border:1px solid #3d65de">
+            </div>
+        </div>
+         <div class="form-group" style="margin-top:30px;">
+            <label for="input-user_pass" class="col-sm-2 control-label">
+                <span class="form-required">*</span>预估收款金额
+            </label>
+            <div class="col-md-6 col-sm-10">
+                <input type="text" class="form-control "  name="accept_amount" style="border-radius:30px;border:1px solid #3d65de">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="input-user_pass" class="col-sm-2 control-label">
+
+            </label>
+            <div class="col-md-6 col-sm-10" style="text-align:center;">
+                <button type="submit"style="border-radius:20px;width:50%;background-color:#3d65de" class="form-control btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+
+<script>
+
+    $('#usernickname').bind('input propertychange',function(){
+        var name = $(this).val()
+        if(name == ""){
+            return
+        }
+        $.ajax({
+            url:"{:Url('task/task/getUserByName')}",
+            data:{
+                name:name
+            },
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                var html =''
+                var project= ''
+                var  division = xhr.data
+                for (x in division) {
+                    html += '<option   value="'+division[x].user_login+'">'+division[x].user_login+'--'+division[x].user_nickname+'</option>'
+                }
+                $("#userlist").html(html)
+                /* for (x in rule) {
+                     project += '<option   value="'+rule[x].project+'">'+rule[x].project+'</option>'
+                 }
+                 $("#rule").html(project);*/
+            }
+        });
+    })
+    $('.format').change(function() {
+        var nowCategory = $(this).attr('data')
+        var words   = $(this).val()
+        var obj =   $(this)
+        if(nowCategory == "" || nowCategory=='tertiary_category'){
+            return
+        }
+        $.ajax({
+            url:"{:Url('admin/index/getNextCategory')}",
+            data:{
+                nowCategory:nowCategory,
+                words:words
+            },
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                var html ='<option value="">下级类目</option>'
+                var project= ''
+                var  division = xhr.data
+                if(nowCategory=='format'){
+                    for (x in division) {
+                        html += '<option   value="'+division[x].primary_category+'">'+division[x].primary_category+'</option>'
+                    }
+                    obj.parent().find('.primary_category').html(html)
+                }
+                if(nowCategory=='primary_category'){
+                    for (x in division) {
+                        html += '<option   value="'+division[x].secondary_category+'">'+division[x].secondary_category+'</option>'
+                    }
+                    obj.parent().find('.secondary_category').html(html)
+                }
+                if(nowCategory=='secondary_category'){
+                    for (x in division) {
+                        html += '<option   value="'+division[x].id+'">'+division[x].tertiary_category+'</option>'
+                    }
+                    obj.parent().find('.tertiary_category').html(html)
+                }
+
+                /* for (x in rule) {
+                     project += '<option   value="'+rule[x].project+'">'+rule[x].project+'</option>'
+                 }
+                 $("#rule").html(project);*/
+            }
+        });
+    })
+
+</script>
+</body>
+</html>

@@ -1,0 +1,225 @@
+<include file="public@header" />
+<style>
+    .new-form-control{
+        padding-top: 7px;
+    }
+</style>
+</head>
+<body>
+<div class="wrap">
+    <include file="public@nav" />
+    <div class="form-horizontal js-ajax-form margin-top-20" style="float:left;width: 69%;padding-left: 50px;">
+        <div class="form-group">
+            <label for="input-user_login" class="col-sm-2 control-label">
+                <span class="form-required">*</span>任务名</label>
+            <div class="new-form-control col-md-6 col-sm-10">
+                {$list.task_title}
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label for="input-user_login" class="col-sm-2 control-label">
+                <span class="form-required">*</span>任务类型</label>
+            <div class="new-form-control col-md-6 col-sm-10">
+                <switch name="$list.task_multiplayer">
+                    <case value="0">
+                        <span class="label label-danger">单人任务</span>
+                    </case>
+                    <case value="1">
+                        <span class="label label-success">多人任务</span>
+                    </case>
+                    <case value="2">
+                        <span class="label label-warning">部门任务</span>
+                    </case>
+                    <case value="3">
+                        <span class="label label-warning">标签任务</span>
+                    </case>
+                </switch>
+            </div>
+
+        </div>
+        <div class="form-group">
+            <label for="input-user_pass" class="col-sm-2 control-label">
+                所属项目
+            </label>
+            <div class="new-form-control col-md-6 col-sm-10">
+                {$list.project_title|default='无'}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-user_pass" class="col-sm-2 control-label">
+                <span class="form-required">*</span>任务内容
+            </label>
+            <div class="new-form-control col-md-6 col-sm-10">
+                {$list.task_content}
+            </div>
+
+        </div>
+        <div class="form-group">
+            <label for="input-user_pass" class="col-sm-2 control-label">
+                <span class="form-required">*</span>优先级
+            </label>
+            <div class="new-form-control col-md-6 col-sm-10">
+
+                <switch name="$list.task_priority">
+                    <case value="1">
+                        <span class="label label-danger">正常</span>
+                    </case>
+                    <case value="2">
+                        <span class="label label-success">次要</span>
+                    </case>
+                    <case value="3">
+                        <span class="label label-warning">主要</span>
+                    </case>
+                    <case value="4">
+                        <span class="label label-warning">紧急</span>
+                    </case>
+                    <case value="5">
+                        <span class="label label-warning">严重</span>
+                    </case>
+                </switch>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-user_pass" class="col-sm-2 control-label">
+                <span class="form-required">*</span>状态
+            </label>
+            <div class="new-form-control col-md-6 col-sm-10">
+                <switch name="$list.task_status">
+                    <case value="0">
+                        <span class="label label-danger">待办</span>
+                    </case>
+                    <case value="1">
+                        <span class="label label-success">进行</span>
+                    </case>
+                    <case value="2">
+                        <span class="label label-warning">审核</span>
+                    </case>
+                    <case value="3">
+                        <span class="label label-warning">完成</span>
+                    </case>
+                    <case value="10">
+                        <span class="label label-warning">关闭</span>
+                    </case>
+                </switch>
+              <!--  <select class="changeTaskStatus" data-msg="{$list.task_id}">
+                    <option value="0" <if condition="$list.task_status eq '0'">selected<else /></if>>待办</option>
+                    <option value="1"  <if condition="$list.task_status eq '1'">selected<else /></if>>进行</option>
+                    <option value="2"  <if condition="$list.task_status eq '2'">selected<else /></if>>审核</option>
+                    <option value="3"  <if condition="$list.task_status eq '3'">selected<else /></if>>完成</option>
+                    <option value="10"  <if condition="$list.task_status eq '10'">selected<else /></if>>关闭</option>
+                </select>-->
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-user_pass" class="col-sm-2 control-label">
+                <span class="form-required">*</span>任务开始时间
+            </label>
+            <div class="new-form-control col-md-6 col-sm-10">
+                {$list.task_start_time|date="Y-m-d H:i:s"}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-user_pass" class="col-sm-2 control-label">
+                <span class="form-required">*</span>任务结束时间
+            </label>
+            <div class="new-form-control col-md-6 col-sm-10">
+                {$list.task_end_time|date="Y-m-d H:i:s"}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-user_pass" class="col-sm-2 control-label">
+                <span class="form-required">*</span>任务价值分
+            </label>
+            <div class="new-form-control col-md-6 col-sm-10">
+                {$list.task_mark}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-user_pass" class="col-sm-2 control-label">
+                <span class="form-required">*</span>任务完成时间
+            </label>
+            <div class="new-form-control col-md-6 col-sm-10">
+                {$list.task_complete_time|date="Y-m-d H:i:s"}
+            </div>
+        </div>
+        <form method="post" class="form-horizontal js-ajax-form margin-top-20" action="">
+            <div class="form-group">
+                <label for="input-user_pass" class="col-sm-2 control-label">
+                    <span class="form-required">*</span>修改归属人
+                </label>
+                <div class="new-form-control col-md-6 col-sm-10">
+                    <input type="hidden" name="transferid" value="{$list.task_id}">
+                    <input id="usernickname" class="new-form-control" name="" placeholder="输入姓名">
+                    <select class="new-form-control" ID="userlist" name="userid" >
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary js-ajax-submit">确定转移</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="form-horizontal js-ajax-form margin-top-20" style="border:1px solid #006fc4;;border-radius:5px;width: 29%;padding-left: 10px;float: right;">
+        <h5>任务动态</h5><br><hr>
+        <foreach name="dynamic" item="voo">
+            <div class="form-group">
+                <label for="input-user_login" class="col-sm-3 control-label">
+                    人&nbsp;&nbsp;员：</label>
+                <div class="new-form-control col-md-6 col-sm-10">
+                    {$voo.user_nickname}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="input-user_login" class="col-sm-3 control-label">
+                    时&nbsp;&nbsp;间：</label>
+                <div class="new-form-control col-md-6 col-sm-10">
+                    {$voo.task_dynamic_createtime|date="Y-m-d H:i:s"}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="input-user_login" class="col-sm-3 control-label">
+                    内&nbsp;&nbsp;容：</label>
+                <div class="new-form-control col-md-6 col-sm-10" style="word-wrap: break-word">
+                    {$voo.task_dynamic_content}
+                </div>
+            </div>
+            <hr><br>
+        </foreach>
+    </div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    $('#usernickname').bind('input propertychange',function(){
+        var name = $(this).val()
+        if(name == ""){
+            return
+        }
+        $.ajax({
+            url:"{:Url('task/getUserByName')}",
+            data:{
+                name:name
+            },
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                var html =''
+                var project= ''
+                var  division = xhr.data
+                for (x in division) {
+                    html += '<option   value="'+division[x].id+'">'+division[x].user_login+'--'+division[x].user_nickname+'</option>'
+                }
+                $("#userlist").html(html)
+                /* for (x in rule) {
+                     project += '<option   value="'+rule[x].project+'">'+rule[x].project+'</option>'
+                 }
+                 $("#rule").html(project);*/
+            }
+        });
+    })
+</script>
+</body>
+</html>

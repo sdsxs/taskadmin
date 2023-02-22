@@ -1,0 +1,146 @@
+<include file="public@header" />
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('task/mytask')}">我的任务</a></li>
+        <li><a href="{:url('task/statistics')}">我的任务统计图</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="get" action="{:url('Task/mytask')}">
+        状态:
+        <select class="form-control" name="task_status" style="width: 120px;">
+            <option value=""  <if condition="$Request.get.task_status eq ''">selected<else /></if> >全部</option>
+            <option value="0" <if condition="$Request.get.task_status eq '0'">selected<else /></if>  >待办</option>
+            <option value="1" <if condition="$Request.get.task_status eq '1'">selected<else /></if> >进行</option>
+            <option value="2" <if condition="$Request.get.task_status eq '2'">selected<else /></if> >审核</option>
+            <option value="3" <if condition="$Request.get.task_status eq '3'">selected<else /></if> >完成</option>
+            <option value="4" <if condition="$Request.get.task_status eq '4'">selected<else /></if> >逾期</option>
+            <option value="5" <if condition="$Request.get.task_status eq '5'">selected<else /></if> >驳回</option>
+            <option value="10" <if condition="$Request.get.task_status eq '10'">selected<else /></if> >关闭</option>
+        </select>
+    <!--    接受人:
+        <input type="text" class="form-control "  name="user_nickname" style="width: 120px;" value="{:input('request.user_nickname/s','')}" >-->
+        开始时间:
+        <input type="text" class="form-control js-bootstrap-datetime"  name="task_start_time" style="width: 120px;" value="{:input('request.task_start_time/s','')}">
+        结束时间:
+        <input type="text" class="form-control js-bootstrap-datetime"  name="task_end_time" style="width: 120px;" value="{:input('request.task_end_time/s','')}" >
+        <input type="submit" class="btn btn-primary" value="搜索" />
+        <a class="btn btn-danger" href="{:url('Task/taskList')}">清空</a>
+    </form>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th width="50">ID</th>
+            <th>任务标题</th>
+            <th>项目</th>
+            <th>任务发起人</th>
+            <th>创建时间</th>
+            <th>开始时间</th>
+            <th>跟进时间</th>
+            <th>完成时间</th>
+            <th width="140">分数</th>
+            <th width="140">状态</th>
+            <th width="70">拆分</th>
+            <th width="70">转移</th>
+        </tr>
+        </thead>
+        <tbody>
+        <foreach name="list" item="vo">
+            <tr>
+                <td>{$vo.task_id}</td>
+                <td><a href="{:url('Task/taskDeatil',['taskid'=>$vo.task_id])}">{$vo.task_title}</a></td>
+                <td>{$vo.task_project_id}</td>
+                <td>{$vo.user_nickname}</td>
+                <td>{$vo.task_submit_time|date="Y-m-d H:i:s"}</td>
+                <td>{$vo.task_start_time|date="Y-m-d H:i:s"}</td>
+                <td>{$vo.task_end_time|date="Y-m-d H:i:s"}</td>
+                <td>{$vo.task_complete_time? date("Y-m-d H:i:s",$vo.task_complete_time) : ""}</td>
+                <td>{$vo.task_mark}</td>
+                <td>
+                    <switch name="vo.task_status">
+                        <case value="0">
+                            <span class="label label-danger">待办</span>
+                        </case>
+                        <case value="1">
+                            <span class="label label-success">进行</span>
+                        </case>
+                        <case value="2">
+                            <span class="label label-info">提交</span>
+                        </case>
+                        <case value="3">
+                            <span class="label label-primary">完成</span>
+                        </case>
+                        <case value="4">
+                            <span class="label label-primary">逾期</span>
+                        </case>
+                        <case value="5">
+                            <span class="label label-primary">驳回</span>
+                        </case>
+                        <case value="10">
+                            <span class="label label-warning">关闭</span>
+                        </case>
+                    </switch>
+                    <select class=" changeTaskStatus" data-msg="{$vo.task_id}">
+                        <option value="0" <if condition="$vo.task_status eq '0'">selected<else /></if>>待办</option>
+                        <option value="1"  <if condition="$vo.task_status eq '1'">selected<else /></if>>进行</option>
+                        <option value="2"  <if condition="$vo.task_status eq '2'">selected<else /></if>>审核</option>
+                       <!-- <option value="3"  <if condition="$vo.task_status eq '3'">selected<else /></if>>完成</option>
+                        <option value="3"  <if condition="$vo.task_status eq '4'">selected<else /></if>>逾期</option>-->
+                        <!--<option value="10"  <if condition="$vo.task_status eq '10'">selected<else /></if>>关闭</option>-->
+                    </select>
+                </td>
+
+                <td>
+                    <select class="explaod" data-msg="{$vo.task_id}">
+                        <option value="">拆分</option>
+                        <option value="{:url('Task/addTask',['parentid'=>$vo.task_id])}">单人任务</option>
+                        <option value="{:url('Task/manyTask',['parentid'=>$vo.task_id])}" >多人任务</option>
+                        <option value="{:url('Task/departmentTask',['parentid'=>$vo.task_id])}" >部门任务</option>
+                        <option value="{:url('Task/labelTask',['parentid'=>$vo.task_id])}" >标签任务</option>
+                    </select>
+                </td>
+                <td>
+                    <a class="btn btn-xs btn-danger " href="{:url('Task/taskTransfer',['taskid'=>$vo.task_id])}">转移</a>
+                </td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+    <div class="pagination">{$list->render()} <li class="page-item"><a class="page-link" href="javascript:void(0)">共{$list->total()}条</a></li></div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    $(function () {
+        $('.changeTaskStatus').change(function() {
+            var status = $(this).val()
+            var taskid  =   $(this).attr("data-msg");
+            $.ajax({
+                url:"{:Url('task/changeTaskStatus')}",
+                data:{
+                    status:status,
+                    taskid:taskid
+                },
+                type:'post',
+                dataType:'json',
+                success:function(xhr){
+                    alert(xhr.msg)
+                    location.reload()
+                },
+                error:function () {
+                    alert(xhr.msg)
+                    location.reload()
+                }
+            });
+        })
+
+        $(".explaod").change(function() {
+            var url = $(this).val()
+            if(url != ""){
+                window.location.href=url;
+            }
+
+        })
+    })
+</script>
+</body>
+</html>

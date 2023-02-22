@@ -1,0 +1,136 @@
+<include file="public@header" />
+<link rel="stylesheet" href="__STATIC__/js/layui-v2.0.2/css/modules/laydate/default/laydate.css" type="text/css" >
+</head>
+<link rel="stylesheet" href="/static/js/layui-v2.0.2/css/layui.css" type="text/css" >
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active">跨业态资源统计图</li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="get" action="">
+        选择时间段:
+        <input type="text" class="form-control js-bootstrap-datetime"  name="start_time" style="width: 180px;" value="{$Request.param.start_time|default=date('Y-m-d 00:00:00')}">
+        --
+        <input type="text" class="form-control js-bootstrap-datetime"  name="end_time" style="width: 180px;" value="{$Request.param.end_time|default=date('Y-m-d 23:59:59')}" >
+        &nbsp;&nbsp;业态：
+        <select type="text" class="form-control "  name="accept_format">
+            <option value="">全部</option>
+            <foreach name="format" item="vo">
+                <option value="{$vo.format}" <eq name="$vo.format" value="$Request.param.accept_format">selected</eq> >{$vo.format}</option>
+            </foreach>
+        </select><input type="submit" class="btn btn-primary" value="搜索" />
+        <input type="submit" class="btn btn-primary" name="export" value="导出" />
+    </form>
+    <div id="container" style="width:100%;min-height: 300px;">
+
+    </div>
+    <div id="" style="width:100%;line-height: 30px;color: red"><i class="fa fa-area-chart"> 转化率 ：{$lv}%</i></div>
+    <div id="count" style="width:100%;line-height: 30px;">
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th width="100"> 状态</th>
+                <th>数量</th>
+
+            </tr>
+            </thead>
+            <foreach name="list" item="vo">
+                <tr>
+                    <th width="">
+                       {$vo.status}
+                    </th>    <th width="">{$vo.count}</th>
+                </tr>
+            </foreach>
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<script type="text/javascript" src="__STATIC__/js/echarts.min.js"></script>
+<script src="__STATIC__/js/layui-v2.0.2/layui.js"></script>
+<script src="__STATIC__/js/layui-v2.0.2/lay/modules/laydate.js"></script>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#time_start',
+            type:'date', // 可选择：年、月、日、时、分、秒
+            format: 'yyyy-MM-dd', //指定时间格式
+            value: new Date(), // 指定值
+            //指定元素
+        });
+        laydate.render({
+            elem: '#time_end', //指定元素
+            type:'date', // 可选择：年、月、日、时、分、秒
+            format: 'yyyy-MM-dd', //指定时间格式
+            value: new Date(), // 指定值
+        });
+    });
+</script>
+<script type="text/javascript">
+    var dom = document.getElementById("container");
+    var myChart = echarts.init(dom);
+    var app = {};
+
+    var option;
+
+
+
+    option = {
+        title: {
+            text: '跨业态资源统计图',
+            subtext: '跨业态资源统计图',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item'
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left'
+        },
+        series: [
+                {
+                    name: '分类',
+                    type: 'pie',
+                    radius: '60%',
+                    data: [ //、、、
+                        <foreach name="list" item="vo">
+                    { value: {$vo.count}, name: '{$vo.status}状态中单量' },
+            </foreach>
+
+    ],
+    label : {
+        normal : {
+            formatter: '{b}:{c}({d}%)',
+                textStyle : {
+                fontWeight : 'normal',
+                    fontSize : 15
+            }
+        }
+    },
+    emphasis: {
+        itemStyle: {
+            shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+        }
+    }
+    }
+    ]
+    };
+
+
+
+    if (option && typeof option === 'object') {
+        myChart.setOption(option);
+    }
+
+</script>
+</body>
+</html>

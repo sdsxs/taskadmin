@@ -1,0 +1,99 @@
+<include file="public@header" />
+<link rel="stylesheet" href="__STATIC__/js/layui-v2.0.2/css/modules/laydate/default/laydate.css" type="text/css" >
+</head>
+<link rel="stylesheet" href="/static/js/layui-v2.0.2/css/layui.css" type="text/css" >
+<body>
+
+
+
+<div class="wrap js-check-wrap" style="padding: 0px">
+    <div style="width: 100%;padding-top:40px;    background-size: 100%;width:100%;">
+        <div id="" style="width:100%;min-height: 160px;">
+            <img src="/static/images/canquan.jpg" width="100%">
+        </div>
+    </div>
+    <div id="count" style="width:100%;line-height: 30px;">
+        <table class="table table-hover table-bordered">
+            <thead>
+            <!--<tr>
+                <th width="100"> 状态</th>
+                <th>分值</th>
+
+            </tr>-->
+            </thead>
+                <tr>
+                    <th width="">
+                        姓名:
+                    </th>
+                    <th width="">{$data.name|default=''}
+                    </th>
+                </tr>
+                <tr>
+                    <th width="">
+                        工号:
+                    </th>
+                    <th width="">{$data.code|default='0'}
+                    </th>
+                </tr>
+
+            <tr>
+                <th width="">
+                    餐券数：
+                </th>
+                <th width="">{$data.count|default='0'}
+                </th>
+            </tr>
+            <tr>
+                <th width="">
+                    截止时间：
+                </th>
+                <th width="">{$data.end_time|default='0'}
+                </th>
+            </tr>
+            <tr>
+                <th width="">
+                    年份：
+                </th>
+                <th width="">{$data.year|default=''}
+                </th>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <!--<div style="width: 100%;padding-left: 20px;padding-right: 20px;text-align: left">
+        &lt;!&ndash;<div style="width: 100%"><h6>称号：{$grade.title|default='当前员工无称号'}</h6></div>
+        <div style="width: 100%"><h6>分数线：{$grade.point|default='当前员工无分数记录'}</h6></div>
+        <div style="width: 100%"><h6>主导形式：{$grade.type|default='当前员工无记录'}</h6></div>
+        <div style="width: 100%"><h6>主导人员：{$grade.leader|default='无'}</h6></div>
+        <div style="width: 100%"><h6>核心规划：</h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$grade.plan|default='无'}</div>&ndash;&gt;
+        <div style="width: 100%;"><h6>我的权益：</h6><div style="padding-left: 10px;">这是我的权益</div></div>
+    </div>-->
+</div>
+
+<script type="text/javascript" src="__STATIC__/js/echarts.min.js"></script>
+<script src="__STATIC__/js/layui-v2.0.2/layui.js"></script>
+<script src="__STATIC__/js/layui-v2.0.2/lay/modules/laydate.js"></script>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#time_start',
+            type:'date', // 可选择：年、月、日、时、分、秒
+            format: 'yyyy-MM-dd', //指定时间格式
+            value: new Date(), // 指定值
+            //指定元素
+        });
+        laydate.render({
+            elem: '#time_end', //指定元素
+            type:'date', // 可选择：年、月、日、时、分、秒
+            format: 'yyyy-MM-dd', //指定时间格式
+            value: new Date(), // 指定值
+        });
+    });
+</script>
+</body>
+</html>

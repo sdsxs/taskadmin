@@ -1,0 +1,76 @@
+<include file="public@header" />
+</head>
+<style>
+    .new-form-control{
+        width: 49%;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #333333;
+        background-color: #fff;
+        background-image: none;
+        /*border: 1px solid #ddd;*/
+        border-radius: 4px;
+    }
+    *{margin: 0;padding: 0;list-style:none;border:none;}
+
+    body {
+        font-family: "microsoft yahei" !important;
+        background-color: #FDFFE0;
+    }
+    ul,li{
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    li{
+        line-height:30px;
+        font-size:16px;
+        padding:5px 10px;
+    }
+    li.current{
+        background:#CCCCCC;
+        color:#0000FF;
+        cursor: pointer;
+    }
+    li:hover{
+        background:#CCCCCC;
+        color:#0000FF;
+        cursor: pointer;
+    }
+</style>
+<body>
+<ul class="breadcrumb">
+    <li style="border-bottom: 1px solid #0a6999"><a href="{:url('admin/index/myTransfer')}">我的转介绍</a></li>
+    <li><a href="{:url('admin/index/resource')}">新增</a></li>
+    <li ><a href="{:url('admin/index/mySourceList')}">我的资源</a></li>
+</ul>
+<div class="wrap">
+    <table class="table table-hover table-bordered" >
+        <thead>
+        <tr>
+            <th>商机编号</th>
+            <th>接收人</th>
+            <th>接收人业态</th>
+            <th>状态</th>
+        </tr>
+        </thead>
+        <tbody>
+        <foreach name="data" item="vo">
+            <tr>
+                <td>{$vo.opportunity_number}</td>
+                <td>{$vo.accept_code}--{$vo.accept_name}</td>
+                <td>{$vo.accept_format}</td>
+                <td>
+                    {$vo.status}
+                </td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+    <div class="pagination">{$data->render()} <li class="page-item"><a class="page-link" href="javascript:void(0)">共{$data->total()}条</a></li></div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<include file="public@header" />
+<link rel="stylesheet" href="__STATIC__/js/layui-v2.0.2/css/modules/laydate/default/laydate.css" type="text/css" >
+<title>职级预估</title>
+</head>
+<link rel="stylesheet" href="/static/js/layui-v2.0.2/css/layui.css" type="text/css" >
+<body>
+
+
+
+<div class="wrap js-check-wrap" style="padding: 0px">
+    <div style="width: 100%;padding-top:40px;    background-size: 100%;width:100%;">
+        <div id="" style="width:100%;min-height: 160px;">
+            <img src="/static/images/zhijiyugu.jpg" width="100%">
+        </div>
+    </div>
+    <div id="count" style="width:100%;line-height: 30px;">
+        <table class="table table-hover table-bordered">
+            <thead>
+            <!--<tr>
+                <th width="100"> 状态</th>
+                <th>分值</th>
+
+            </tr>-->
+            </thead>
+                <tr>
+                    <th width="">
+                        姓名:
+                    </th>
+                    <th width="">{$data.name|default=''}
+                    </th>
+                </tr>
+                <tr>
+                    <th width="">
+                        工号:
+                    </th>
+                    <th width="">{$data.code|default='0'}
+                    </th>
+                </tr>
+
+            <tr>
+                <th width="">
+                    当月初始积分：
+                </th>
+                <th width="">{$data.month_start_score|default='0'}
+                </th>
+            </tr>
+            <tr>
+                <th width="">
+                    当月职级 ：
+                </th>
+                <th width="">{$data.rank|default=''}
+                </th>
+            </tr>
+            <tr>
+                <th width="">
+                    当前实际利润业绩：
+                </th>
+                <th width="">{$data.actual_profit|default=''}
+                </th>
+            </tr>
+
+            <tr>
+                <th width="">
+                    实际利润业绩积分：
+                </th>
+                <th width="">{$data.actual_score|default='0'}
+                </th>
+            </tr>
+            <tr>
+                <th width="">
+                    职级基础分：
+                </th>
+                <th width="">{$data.base_score|default='0'}
+                </th>
+            </tr>
+            <tr>
+                <th width="">
+                    当前累计积分：
+                </th>
+                <th width="">{$data.total_score|default='0'}
+                </th>
+            </tr>
+            <tr>
+                <th width="">
+                    转正标准：
+                </th>
+                <th width="">{$data.standard|default=''}
+                </th>
+            </tr>
+            <tr>
+                <th width="">
+                    预估下月职级：
+                </th>
+                <th width="">{$data.estimate_score|default=''}
+                </th>
+            </tr><tr>
+            <th width="">
+                预估晋降情况：
+            </th>
+            <th width="">{$data.estimate_lost_class|default=''}
+            </th>
+        </tr><tr>
+            <th width="">
+                预估晋级差距：
+            </th>
+            <th width="">{$data.estimate_promotion_gap|default=''}
+            </th>
+        </tr><tr>
+            <th width="">
+                预估保级差距：
+            </th>
+            <th width="">{$data.estimate_relegation_gap|default=''}
+            </th>
+        </tr><tr>
+            <th width="">
+                带教预警：
+            </th>
+            <th width="">{$data.early_warning|default=''}
+            </th>
+        </tr><tr>
+            <th width="">
+                数据截止时间：
+            </th>
+            <th width="">{$data.end_time|default=''}
+            </th>
+        </tr><tr>
+            <th width="">
+                更新时间：
+            </th>
+            <th width="">{$data.create_time|default=''}
+            </th>
+        </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+    <!--<div style="width: 100%;padding-left: 20px;padding-right: 20px;text-align: left">
+        &lt;!&ndash;<div style="width: 100%"><h6>称号：{$grade.title|default='当前员工无称号'}</h6></div>
+        <div style="width: 100%"><h6>分数线：{$grade.point|default='当前员工无分数记录'}</h6></div>
+        <div style="width: 100%"><h6>主导形式：{$grade.type|default='当前员工无记录'}</h6></div>
+        <div style="width: 100%"><h6>主导人员：{$grade.leader|default='无'}</h6></div>
+        <div style="width: 100%"><h6>核心规划：</h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$grade.plan|default='无'}</div>&ndash;&gt;
+        <div style="width: 100%;"><h6>我的权益：</h6><div style="padding-left: 10px;">这是我的权益</div></div>
+    </div>-->
+</div>
+
+<script type="text/javascript" src="__STATIC__/js/echarts.min.js"></script>
+<script src="__STATIC__/js/layui-v2.0.2/layui.js"></script>
+<script src="__STATIC__/js/layui-v2.0.2/lay/modules/laydate.js"></script>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#time_start',
+            type:'date', // 可选择：年、月、日、时、分、秒
+            format: 'yyyy-MM-dd', //指定时间格式
+            value: new Date(), // 指定值
+            //指定元素
+        });
+        laydate.render({
+            elem: '#time_end', //指定元素
+            type:'date', // 可选择：年、月、日、时、分、秒
+            format: 'yyyy-MM-dd', //指定时间格式
+            value: new Date(), // 指定值
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<include file="public@header" />
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('task/transferList')}">转移给我的任务</a></li>
+       <!-- <li><a href="{:url('Menu/add')}">添加菜单</a></li>
+        <li><a href="{:url('Menu/lists')}">所有菜单</a></li>-->
+    </ul>
+    <form class="js-ajax-form" action="{:url('Menu/listOrder')}" method="post">
+
+        <table class="table table-hover table-bordered table-list" id="menus-table">
+            <thead>
+            <tr>
+                <th width="">ID</th>
+                <th width="">申请人</th>
+                <th width="">任务名</th>
+                <th>任务类型</th>
+                <th width="">任务状态</th>
+                <th width="">转移状态</th>
+                <th>操作</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="info" item="vo">
+                <tr>
+                    <td>{$vo.task_id}</td>
+                    <td>{$vo.applicant}</td>
+                    <td>{$vo.task_title}</td>
+                    <td>
+                        <switch name="$vo.task_multiplayer">
+                            <case value="0">
+                                <span class="label label-danger">单人任务</span>
+                            </case>
+                            <case value="1">
+                                <span class="label label-success">多人任务</span>
+                            </case>
+                            <case value="2">
+                                <span class="label label-warning">部门任务</span>
+                            </case>
+                            <case value="3">
+                                <span class="label label-warning">标签任务</span>
+                            </case>
+                        </switch></td>
+                    <td>
+                        <switch name="$vo.task_status">
+                            <case value="0">
+                                <span class="label label-danger">待办</span>
+                            </case>
+                            <case value="1">
+                                <span class="label label-success">进行</span>
+                            </case>
+                            <case value="2">
+                                <span class="label label-warning">审核</span>
+                            </case>
+                            <case value="3">
+                                <span class="label label-warning">完成</span>
+                            </case>
+                            <case value="4">
+                                <span class="label label-warning">逾期</span>
+                            </case>
+                            <case value="5">
+                                <span class="label label-warning">驳回</span>
+                            </case>
+                            <case value="10">
+                                <span class="label label-warning">关闭</span>
+                            </case>
+                        </switch>
+                    </td>
+                    <td><switch name="$vo.transfer_status">
+                        <case value="0">
+                            <span class="label label-danger">待处理</span>
+                        </case>
+                        <case value="1">
+                            <span class="label label-success">同意</span>
+                        </case>
+                        <case value="2">
+                            <span class="label label-warning">拒绝</span>
+                        </case>
+                    </switch></td>
+                    <td>
+                        <switch name="$vo.transfer_status">
+                            <case value="0">
+                                <a data="{$vo.id}" class="btn btn-xs btn-primary agree" >同意</a>
+                                <a data="{$vo.id}"  class="btn btn-xs btn-primary refuse" >拒绝</a>
+                            </case>
+                        </switch>
+
+                       <!-- <a class="btn btn-xs btn-danger js-ajax-dialog-btn" href="/admin/user/ban/id/6569.html" data-msg="您确定要拉黑此用户吗？">拉黑</a>-->
+                    </td>
+                </tr>
+            </foreach>
+
+            </tbody>
+
+        </table>
+
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    $('.agree').click(function() {
+        var data = $(this).attr('data')
+        if(data == ""){
+            return
+        }
+        $.ajax({
+            url:"{:Url('task/doTransfer')}",
+            data:{
+                id:data,
+                transfer_status:1
+            },
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                window.location.reload()
+            }
+        });
+    })
+    $('.refuse').click(function() {
+        var data = $(this).attr('data')
+        if(data == ""){
+            return
+        }
+        $.ajax({
+            url:"{:Url('task/doTransfer')}",
+            data:{
+                id:data,
+                transfer_status:2
+            },
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                window.location.reload()
+            }
+        });
+    })
+</script>
+</body>
+</html>

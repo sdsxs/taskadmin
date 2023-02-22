@@ -1,0 +1,190 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>编辑 - 项目列表</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+
+    <link rel="stylesheet" href="__STATIC__/Theme/assets/css/amazeui.min.css?v=2.3.3">
+    <link rel="stylesheet" href="__STATIC__/Theme/assets/css/admin.css?v=2.3.3">
+    <link rel="stylesheet" href="__STATIC__/Theme/assets/css/app.css?v=2.3.3">
+    <link rel="stylesheet" href="__STATIC__/Theme/assets/css/ui-dialog.css?v=2.3.3">
+    <link rel="stylesheet" href="__STATIC__/Theme/assets/css/amazeui.datetimepicker.css?v=2.3.3">
+
+    <script>
+        var PESCMS_URL = 'https://www.pescms.com';
+        var PESCMS_PATH = '';
+    </script>
+
+    <!--[if (gte IE 9)|!(IE)]><!-->
+    <script src="__STATIC__/Theme/assets/js/jquery.min.js?v=2.3.3"></script>
+    <!--<![endif]-->
+    <!--[if lte IE 8 ]>
+    <script src="__STATIC__/Theme/assets/js/jquery.min.js?v=2.3.3"></script>
+    <script src="__STATIC__/Theme/assets/js/modernizr.js?v=2.3.3"></script>
+    <script src="__STATIC__/Theme/assets/js/amazeui.ie8polyfill.min.js?v=2.3.3"></script>
+    <![endif]-->
+    <script src="__STATIC__/Theme/assets/js/amazeui.min.js?v=2.3.3"></script>
+    <script src="__STATIC__/Theme/assets/js/dialog-min.js?v=2.3.3"></script>
+    <script src="__STATIC__/Theme/assets/js/dialog-plus-min.js?v=2.3.3"></script>
+    <script src="__STATIC__/Theme/assets/js/amazeui.datetimepicker.min.js?v=2.3.3"></script>
+
+    <!--加载百度编辑器-->
+    <script src="__STATIC__/Theme/assets/ueditor/ueditor.config.js?v=2.3.3"></script>
+    <script src="__STATIC__/Theme/assets/ueditor/ueditor.all.js?v=2.3.3"></script>
+    <script src="__STATIC__/Theme/assets/ueditor/lang/zh-cn/zh-cn.js?v=2.3.3"></script>
+    <!--加载百度编辑器-->
+
+    <!--百度上传控件-->
+    <link rel="stylesheet" href="__STATIC__/Theme/assets/css/webuploader.css"/>
+    <script src="__STATIC__/Theme/assets/js/webuploader.js"></script>
+    <script src="__STATIC__/Theme/assets/js/AMUIwebuploader.js"></script>
+    <script>
+        $(function(){
+            $.webuploaderConfig({
+                server:'/?g=Team&m=Upload&a=ueditor&method=POST&action=uploadimage'
+            });
+        })
+    </script>
+    <!--百度上传控件-->
+
+    <!--拾色器-->
+    <script src="__STATIC__/Theme/assets/js/spectrum.js?v=2.3.3"></script>
+    <link rel="stylesheet" href="__STATIC__/Theme/assets/css/spectrum.css?v=2.3.3"/>
+    <!--拾色器-->
+
+    <!--图片放大器-->
+    <script src="__STATIC__/Theme/assets/js/jquery.fancybox.min.js?v=2.3.3"></script>
+    <link rel="stylesheet" href="__STATIC__/Theme/assets/css/jquery.fancybox.min.css?v=2.3.3"/>
+    <!--图片放大器-->
+
+    <script src="__STATIC__/Theme/assets/js/app.js?v=2.3.3"></script>
+</head>
+<body>
+<div class="am-text-sm am-padding-top" id="container">
+    <!-- content start -->
+    <div class="admin-content am-padding-xs am-padding-top-0 am-padding-bottom-0">
+        <div class="am-panel am-panel-default">
+            <div class="am-panel-bd">
+                <div class="am-cf">
+                    <div class="am-fl am-cf">
+                        <a href="{:url('task/task/projectList')}" class="am-margin-right-xs am-text-danger"><i
+                                class="am-icon-reply"></i>返回</a>
+                        <strong class="am-text-primary am-text-lg">编辑 - 项目列表</strong>
+                    </div>
+                </div>
+                <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed"/>
+                <form class="am-form am-form-horizontal ajax-submit"  action="" method="post" data-am-validator>
+                    <input type="hidden" name="method" value="PUT"/>
+                    <input type="hidden" name="project_id" value="{$data.project_id}"/>
+                              <div class="am-g am-g-collapse">
+                    <div class="am-u-sm-12 am-u-sm-centered">
+                        <div class="am-form-group">
+                            <label class="am-block">项目名称<i class="am-text-danger">*</i></label>
+                            <input class="form-text-input input-leng3" name="title" placeholder="项目名称" type="text" value="{$data.project_title}" required  />                                    </div>
+                    </div>
+                </div>
+                    <div class="am-g am-g-collapse">
+                        <div class="am-u-sm-12 am-u-sm-centered">
+                            <div class="am-form-group">
+                                <label class="am-block">项目描述</label>
+                                <script type="text/plain" id="content" style="height:250px;"><p>{:htmlspecialchars_decode($data.project_content)}<br/></p></script>
+                                <script>
+                                var ue = UE.getEditor('content', {
+                                    textarea: 'content'
+                                });
+                                </script>                                    </div>
+                        </div>
+                    </div>
+                    <div class="am-g am-g-collapse">
+                        <div class="am-u-sm-12 am-u-sm-centered">
+                            <div class="am-form-group">
+                                <label class="am-block">排序</label>
+                                <input class="form-text-input input-leng3" name="listsort" placeholder="排序" type="text" value="{$data.project_listsort}"   />                                    </div>
+                        </div>
+                    </div>
+
+
+                    <div class="am-g am-g-collapse am-margin-bottom">
+                        <div class="am-u-sm-12 am-u-sm-centered">
+                            <button type="submit" class="am-btn am-radius am-btn-primary am-btn-xs" >提交保存</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            $('#btn-submit').click(function () {
+                var $btn = $(this)
+                $btn.button('loading');
+                setTimeout(function () {
+                    $btn.button('reset');
+                }, 5000);
+            });
+        })
+    </script></div>
+<!--请勿删除页脚这部分代码，否则会导致程序异常-->
+<footer class="my-footer pescms-footer-2">
+    <small>© Copyright 2015-2022. Power by <a href="javascript:void(0)" target="">Dgg</a>
+    </small>
+</footer>
+<!--请勿删除页脚这部分代码，否则会导致程序异常-->
+<div id="bulletin" class="am-offcanvas" >
+    <div class="am-offcanvas-bar am-padding-0">
+        <div class="am-offcanvas-content bulletin-content am-padding-0">
+        </div>
+    </div>
+</div>
+<script>
+    $(function(){
+        var version  = '2.3.3';
+        var timestamp = Date.parse( new Date());
+
+        //获取本地存储
+        var important = parseInt(localStorage.getItem('important'));
+        var close_important = parseInt(localStorage.getItem('close_important'));
+        var record_version = localStorage.getItem('version');
+        var check_time = localStorage.getItem('check_time');
+
+        //检查是否需要弹窗重要更新提示框
+        if(important == 1 && close_important != 1 && record_version == version ){
+            var alter_str = '<div class="am-alert am-alert-warning am-margin-0 am-text-sm" data-am-alert><button type="button" class="am-close close-important">&times;</button>' +
+                '当前系统有一个重要更新发布，点击 <a href="/?g=Team&m=Setting&a=upgrade" style="color:blue">这里</a> 查看' +
+                '</div>';
+            $('header').before(alter_str);
+        }
+
+        /**
+         * 判断本地存储的版本号与程序版本号是否一致
+         * 判断上次检查更新时间记录是否大于1天
+         */
+        if(record_version != version && check_time<= timestamp){
+            $.getJSON(PESCMS_URL+'/patch/2/2.3.3', function(data){
+                if(data.status == 200){
+                    if(data.data.important == 1){
+                        localStorage.setItem('important', '1')
+                    }
+                    localStorage.setItem('version', version);
+                    localStorage.removeItem('close_important')
+                }
+            }).complete(function(){
+                localStorage.setItem('check_time', timestamp + 86400000);
+            })
+        }
+
+        $('body').on('click', '.close-important', function(){
+            localStorage.setItem('close_important', '1')
+        })
+
+    })
+</script>
+</body>
+</html>

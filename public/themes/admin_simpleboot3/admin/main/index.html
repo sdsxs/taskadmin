@@ -1,0 +1,243 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>仪表盘</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <link rel="stylesheet" href="__STATIC__/Theme/assets/css/amazeui.min.css?v=2.3.3">
+    <link rel="stylesheet" href="__STATIC__/Theme/assets/css/admin.css?v=2.3.3">
+    <link rel="stylesheet" href="__STATIC__/Theme/assets/css/app.css?v=2.3.3">
+    <link rel="stylesheet" href="__STATIC__/Theme/assets/css/ui-dialog.css?v=2.3.3">
+    <link rel="stylesheet" href="__STATIC__/Theme/assets/css/amazeui.datetimepicker.css?v=2.3.3">
+
+    <script>
+        var PESCMS_URL = 'https://www.pescms.com';
+        var PESCMS_PATH = '';
+    </script>
+
+    <!--[if (gte IE 9)|!(IE)]><!-->
+    <script src="__STATIC__/Theme/assets/js/jquery.min.js?v=2.3.3"></script>
+    <!--<![endif]-->
+    <!--[if lte IE 8 ]>
+    <script src="__STATIC__/Theme/assets/js/jquery.min.js?v=2.3.3"></script>
+    <script src="__STATIC__/Theme/assets/js/modernizr.js?v=2.3.3"></script>
+    <script src="__STATIC__/Theme/assets/js/amazeui.ie8polyfill.min.js?v=2.3.3"></script>
+    <![endif]-->
+    <script src="__STATIC__/Theme/assets/js/amazeui.min.js?v=2.3.3"></script>
+    <script src="__STATIC__/Theme/assets/js/dialog-min.js?v=2.3.3"></script>
+    <script src="__STATIC__/Theme/assets/js/dialog-plus-min.js?v=2.3.3"></script>
+    <script src="__STATIC__/Theme/assets/js/amazeui.datetimepicker.min.js?v=2.3.3"></script>
+
+    <!--加载百度编辑器-->
+    <script src="__STATIC__/Theme/assets/ueditor/ueditor.config.js?v=2.3.3"></script>
+    <script src="__STATIC__/Theme/assets/ueditor/ueditor.all.js?v=2.3.3"></script>
+    <script src="__STATIC__/Theme/assets/ueditor/lang/zh-cn/zh-cn.js?v=2.3.3"></script>
+    <!--加载百度编辑器-->
+
+    <!--百度上传控件-->
+    <link rel="stylesheet" href="__STATIC__/Theme/assets/css/webuploader.css"/>
+    <script src="__STATIC__/Theme/assets/js/webuploader.js"></script>
+    <script src="__STATIC__/Theme/assets/js/AMUIwebuploader.js"></script>
+
+    <!--百度上传控件-->
+
+    <!--拾色器-->
+    <script src="__STATIC__/Theme/assets/js/spectrum.js?v=2.3.3"></script>
+    <link rel="stylesheet" href="__STATIC__/Theme/assets/css/spectrum.css?v=2.3.3"/>
+    <!--拾色器-->
+
+    <!--图片放大器-->
+    <script src="__STATIC__/Theme/assets/js/jquery.fancybox.min.js?v=2.3.3"></script>
+    <link rel="stylesheet" href="__STATIC__/Theme/assets/css/jquery.fancybox.min.css?v=2.3.3"/>
+    <!--图片放大器-->
+
+    <script src="__STATIC__/Theme/assets/js/app.js?v=2.3.3"></script>
+</head>
+<body><div class="am-text-sm am-padding-top" id="container">
+    <div class="admin-content">
+        <div class="admin-content-body">
+            <ul class="am-avg-sm-1 am-avg-md-5 am-margin am-padding am-text-center admin-content-list ">
+                <li>
+                    <a href="{:url('task/task/mytask')}" class="am-link-muted"><span class="am-icon-btn am-icon-tags"></span><br/>我的任务<br/>{$totaltask}                </a>
+                </li>
+                <li>
+                    <a href="{:url('task/task/mytask')}?day={:date('Y-m-d')}" class="am-text-primary"><span class="am-icon-btn am-icon-calendar-plus-o"></span><br/>今天任务<br/>{$todaytask}               </a>
+                </li>
+                <li>
+                    <a href="{:url('task/task/mytask')}?task_status=3" class="am-text-danger"><span class="am-icon-btn am-icon-calendar-times-o"></span><br/>完成任务<br/>{$finistask}                 </a>
+                </li>
+                <li>
+                    <a href="{:url('task/task/mytask')}?task_status=4" class="am-text-warning"><span class="am-icon-btn am-icon-close"></span><br/>逾期任务<br/>{$beoverdue}              </a>
+                </li>
+                <li>
+                    <a href="" class="am-text-success"><span class="am-icon-btn am-icon-check"></span><br/>完成率<br/>{$Completionrate}%
+                    </a>
+                </li>
+            </ul>
+
+            <div class="am-g">
+                <div class="am-u-md-4">
+                    <div class="am-panel am-panel-default ">
+                        <div class="am-panel-hd">公告栏</div>
+                        <ul class="am-list am-list-static">
+                            <foreach name="Bulletin" item="vo">
+                                <li style="line-height: 10px">
+                                    <a href="{:url('task/task/getBulletin')}?id={$vo.bulletin_id}" class="am-padding-0 bulletin">{$vo.bulletin_title}</a>
+                                </li>
+                            </foreach>
+                        </ul>
+                        <ul class="am-pagination am-pagination-right am-text-sm">{$Bulletin->render()}</ul>
+                    </div>
+                    <!--bulletin-->
+                    <script>
+                        $(function () {
+                            $('.bulletin').on('click', function () {
+                                var href = $(this).attr('href');
+                                var progress = $.AMUI.progress;
+                                progress.start();
+                                $.get(href, function (data) {
+                                    $('.bulletin-content').html(data)
+                                    $('#bulletin').offCanvas('open');
+                                    progress.done();
+                                });
+                                return false;
+                            });
+                        });
+                    </script>
+                    <!--bulletin-->            </div>
+                <div class="am-u-md-4">
+                    <div class="am-panel am-panel-default ">
+                        <div class="am-panel-hd">时效图</div>
+                        <div class="am-panel-bd am-padding-0">
+                            <div id="container-line-char" style="margin: 0 auto"></div>
+                        </div>
+                    </div>
+                    <script src="__STATIC__/Theme/assets/js/highcharts.js?v.2.1.0"></script>
+                    <script type="text/javascript">
+                        $(function () {
+                            var data = eval("(" + '<?php echo json_encode($aging["list"]) ?>' + ")");
+                            var xCategories = ['<?php if($aging["date"]) echo implode("', '", $aging["date"]); ?>']
+                            $('#container-line-char').highcharts({
+                                chart: {
+                                    height: 300,
+                                    type: 'areaspline',
+                                    renderTo: 'container',
+                                },
+                                title: {
+                                    text: null
+                                },
+                                xAxis: {
+                                    categories: ['<?php if($aging["date"]) echo implode("', '", $aging["date"]); ?>'],
+                                    minPadding: 0,
+                                    maxPadding: 0,
+                                },
+                                yAxis: {
+                                    labels: {
+                                        enabled: false
+                                    },
+                                    title: {
+                                        text: null
+                                    },
+                                    gridLineWidth: 0
+                                },
+                                plotOptions: {
+                                    series: {
+                                        pointPlacement: "on"
+                                    },
+                                    areaspline: {
+                                        fillOpacity: 0.7
+                                    }
+                                },
+                                series: data
+                            });
+                        });
+                    </script>            </div>
+                <div class="am-u-md-4">
+                    <div class="calendar"></div>
+                    <script>
+                        $(function () {
+                            $('.calendar').datetimepicker({
+                                minView: 2
+                            });
+
+                            $('.calendar').datetimepicker().on('changeDate', function (ev) {
+                                var date = new Date(ev.date.valueOf());
+                                var Y = date.getFullYear() + '-';
+                                var M = (date.getMonth() + 1) + '-';
+                                var D = date.getDate();
+                                var url = '{:url("task/task/mytask")}?day=' + Y + M + D + '&end=' + Y + M + D;
+                                window.location.href = url;
+                            });
+                        })
+                    </script>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--请勿删除页脚这部分代码，否则会导致程序异常-->
+<footer class="my-footer pescms-footer-2">
+    <small>© Copyright 2015-2022. Power by <a href="javascript:void(0)" target="">Dgg</a>
+    </small>
+</footer>
+<!--请勿删除页脚这部分代码，否则会导致程序异常-->
+<div id="bulletin" class="am-offcanvas" >
+    <div class="am-offcanvas-bar am-padding-0">
+        <div class="am-offcanvas-content bulletin-content am-padding-0">
+        </div>
+    </div>
+</div>
+<script>
+    $(function(){
+        var version  = '2.3.3';
+        var timestamp = Date.parse( new Date());
+
+        //获取本地存储
+        var important = parseInt(localStorage.getItem('important'));
+        var close_important = parseInt(localStorage.getItem('close_important'));
+        var record_version = localStorage.getItem('version');
+        var check_time = localStorage.getItem('check_time');
+
+        //检查是否需要弹窗重要更新提示框
+        if(important == 1 && close_important != 1 && record_version == version ){
+            var alter_str = '<div class="am-alert am-alert-warning am-margin-0 am-text-sm" data-am-alert><button type="button" class="am-close close-important">&times;</button>' +
+                '当前系统有一个重要更新发布，点击 <a href="/?g=Team&m=Setting&a=upgrade" style="color:blue">这里</a> 查看' +
+                '</div>';
+            $('header').before(alter_str);
+        }
+
+        /**
+         * 判断本地存储的版本号与程序版本号是否一致
+         * 判断上次检查更新时间记录是否大于1天
+         */
+        if(record_version != version && check_time<= timestamp){
+            $.getJSON(PESCMS_URL+'/patch/2/2.3.3', function(data){
+                if(data.status == 200){
+                    if(data.data.important == 1){
+                        localStorage.setItem('important', '1')
+                    }
+                    localStorage.setItem('version', version);
+                    localStorage.removeItem('close_important')
+                }
+            }).complete(function(){
+                localStorage.setItem('check_time', timestamp + 86400000);
+            })
+        }
+
+        $('body').on('click', '.close-important', function(){
+            localStorage.setItem('close_important', '1')
+        })
+
+    })
+</script>
+</body>
+</html>
+
