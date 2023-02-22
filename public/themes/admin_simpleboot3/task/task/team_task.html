@@ -168,7 +168,7 @@
     $(function () {
         var obj =new Object();
          obj.name = "getchild";
-        function getname(){
+        obj.getname = function getname(){
             return obj.name
         }
         window.s = obj;
@@ -182,7 +182,7 @@
         $('#setuser').val(str)
     });
     $('.one').click(function() {
-        alert(s.getname);return
+        alert(s.getname());return
         var department = $(this).attr('data')
         var obj =   $(this)
         if(department == ""){
